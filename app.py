@@ -118,6 +118,37 @@ input[type=range]::-ms-track {
     border-radius: 4px;
     background: linear-gradient(90deg, #FFD93D, #6BCB77, #4D96FF, #FF6B6B);
 }
+/* Slider Track & Handle - match highlight gradient */
+input[type=range]::-webkit-slider-thumb {
+    background: linear-gradient(90deg, #FFD93D, #6BCB77);
+    border-radius: 50%;
+}
+input[type=range]::-moz-range-thumb {
+    background: linear-gradient(90deg, #FFD93D, #6BCB77);
+    border-radius: 50%;
+}
+input[type=range]::-ms-thumb {
+    background: linear-gradient(90deg, #FFD93D, #6BCB77);
+    border-radius: 50%;
+}
+
+/* Slider Track */
+input[type=range]::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #FFD93D, #6BCB77);
+}
+input[type=range]::-moz-range-track {
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #FFD93D, #6BCB77);
+}
+input[type=range]::-ms-track {
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #FFD93D, #6BCB77);
+}
+
 </style>
 """, unsafe_allow_html=True)
 
