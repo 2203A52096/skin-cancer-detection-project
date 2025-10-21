@@ -4,13 +4,13 @@ import numpy as np
 import tensorflow as tf
 import os
 
-# Page config
+# ---------------- PAGE CONFIG ----------------
 st.set_page_config(page_title="Safe Skin", page_icon="🩺", layout="wide")
 
-# --- Load Model ---
+# ---------------- LOAD MODEL ----------------
 @st.cache_resource
 def load_model():
-    model_path = "skincancercnn.h5"  # file is in root, not inside /model/
+    model_path = "skincancercnn.h5"  # ensure this file is in the same folder as app.py
 
     if not os.path.exists(model_path):
         st.error("❌ Model file not found! Please make sure 'skincancercnn.h5' is in the same folder as app.py")
@@ -25,96 +25,150 @@ def load_model():
         return None
 
 
-# Example usage
+# Load model once
 model = load_model()
 
-# --- Sidebar Navigation ---
-page = st.sidebar.selectbox("Navigate", ["Home", "Summary", "Prediction"])
+# ---------------- SIDEBAR NAVIGATION ----------------
+page = st.sidebar.selectbox(
+    "🧭 Navigate",
+    ["🏠 Home", "🔬 Prediction", "💊 Solution"]
+)
 
 # ---------------- HOME PAGE ----------------
-if page == "Home":
-    st.title("🩺 Safe Skin: AI-based Skin Cancer Detection")
+if page == "🏠 Home":
+    st.markdown("<h1 style='text-align: center; color: #D6336C;'>🩺 <b>Safe Skin</b></h1>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center; color: #555;'>AI-powered Skin Cancer Detection & Support System</h3>", unsafe_allow_html=True)
+    st.write("---")
 
-    st.subheader("Project Overview")
+    st.subheader("🌟 Features")
     st.write("""
-**Safe Skin** is a deep learning system designed to detect and classify skin lesions from dermoscopic images.  
-Early detection of skin cancer significantly improves patient survival. This system assists dermatologists and enables self-screening in areas with limited access to medical expertise.
-""")
+    - Upload dermoscopic skin images for **AI-based classification**.
+    - Get **instant predictions** of skin lesion type with **confidence scores**.
+    - Access **possible treatment plans** and **recovery insights**.
+    - Designed for both **dermatologists** and **patients** for decision support.
+    """)
 
-    st.subheader("Project Goal")
+    st.subheader("🎯 Goals")
     st.write("""
-- Provide **accurate and fast detection** of skin cancer.
-- Assist dermatologists in making **informed decisions**.
-- Enable **self-screening** for individuals in remote or resource-limited areas.
-""")
+    - Enable **early detection** of skin cancer using deep learning.
+    - Support **dermatologists** with AI-assisted decision tools.
+    - Provide **accessible screening** for people in remote areas.
+    """)
 
-    st.subheader("Advantages")
+    st.subheader("💡 Advantages")
     st.write("""
-- **Early diagnosis** improves survival chances.
-- Reduces **human error** in lesion classification.
-- Can be integrated into **mobile applications** for tele-dermatology.
-- **Visual explanation** via Grad-CAM highlights important regions.
-""")
-
-# ---------------- SUMMARY PAGE ----------------
-elif page == "Summary":
-    st.title("📊 Summary of Safe Skin System")
-
-    st.subheader("Dataset & Classes")
-    st.write("""
-The system uses the HAM10000 dataset (subset) with JPEG images and CSV metadata.  
-
-**Classes:**
-- Melanocytic nevi (nv) – Benign
-- Melanoma (mel) – Malignant
-- Benign keratosis (bkl) – Benign
-- Basal cell carcinoma (bcc) – Malignant
-- Actinic keratoses (akiec) – Precancerous
-- Vascular lesions (vasc) – Benign
-- Dermatofibroma (df) – Benign
-""")
-
-    st.subheader("Workflow")
-    st.write("""
-1. **Input:** Dermoscopic image uploaded by the user.
-2. **Preprocessing:** Hair removal, color normalization, resizing, data augmentation.
-3. **Prediction:** CNN or Transfer Learning model (ResNet50, EfficientNet) predicts the lesion class.
-4. **Visualization:** Grad-CAM heatmap highlights important regions influencing the prediction.
-""")
-
-    st.subheader("Implementation Pipeline")
-    st.write("""
-- **Data Preprocessing:** Load images, remove hair, resize, normalize, augment.  
-- **Model Development:** Custom CNN or Transfer Learning with dropout to prevent overfitting.  
-- **Training & Evaluation:** Optimizers: Adam/SGD, Loss: Categorical Cross-Entropy, Metrics: Accuracy, Precision, Recall, F1-score, ROC-AUC.  
-- **Explainability:** Grad-CAM to visualize lesion regions influencing predictions.
-""")
+    - Improves **accuracy** and **speed** of diagnosis.  
+    - Reduces **human error** in lesion interpretation.  
+    - Can be integrated into **tele-dermatology and mobile apps**.  
+    - Offers **visual explanation (Grad-CAM)** for better trust in AI decisions.
+    """)
 
 # ---------------- PREDICTION PAGE ----------------
-elif page == "Prediction":
-    st.title("🔬 Safe Skin Prediction")
+elif page == "🔬 Prediction":
+    st.title("🔬 Skin Lesion Prediction")
 
-    # File uploader
-    uploaded_file = st.file_uploader("Upload a dermoscopic image", type=["jpg", "jpeg", "png"])
+    uploaded_file = st.file_uploader("📤 Upload a dermoscopic image", type=["jpg", "jpeg", "png"])
 
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
         st.image(image, caption='Uploaded Image', use_column_width=True)
 
         if st.button("🔍 Predict"):
-            st.write("Analyzing image...")
+            st.write("🧠 Analyzing the image...")
 
             # Preprocess image
-            img = image.resize((224, 224))  # adjust to your model input
+            img = image.resize((224, 224))
             img_array = np.array(img) / 255.0
             img_array = np.expand_dims(img_array, axis=0)
 
             # Predict
             preds = model.predict(img_array)
-            class_names = ["Melanocytic nevi", "Melanoma", "Benign keratosis", 
-                           "Basal cell carcinoma", "Actinic keratoses", "Vascular lesions", "Dermatofibroma"]
+            class_names = [
+                "Melanocytic nevi (Benign)",
+                "Melanoma (Malignant)",
+                "Benign keratosis (Benign)",
+                "Basal cell carcinoma (Malignant)",
+                "Actinic keratoses (Precancerous)",
+                "Vascular lesions (Benign)",
+                "Dermatofibroma (Benign)"
+            ]
+
             predicted_class = class_names[np.argmax(preds)]
             confidence = np.max(preds)
 
-            st.success(f"### Prediction: {predicted_class}")
-            st.write(f"**Confidence:** {confidence*100:.2f}%")
+            st.success(f"### 🧾 Prediction: {predicted_class}")
+            st.info(f"**Confidence Score:** {confidence * 100:.2f}%")
+
+# ---------------- SOLUTION PAGE ----------------
+elif page == "💊 Solution":
+    st.title("💊 Treatment & Recovery Plan")
+
+    cancer_type = st.selectbox(
+        "Select the type of skin cancer:",
+        [
+            "Melanocytic nevi (Benign)",
+            "Melanoma (Malignant)",
+            "Benign keratosis (Benign)",
+            "Basal cell carcinoma (Malignant)",
+            "Actinic keratoses (Precancerous)",
+            "Vascular lesions (Benign)",
+            "Dermatofibroma (Benign)"
+        ]
+    )
+
+    if cancer_type:
+        st.subheader(f"🧠 Selected: {cancer_type}")
+        st.write("---")
+
+        # Possible recovery time and treatment plans
+        if "Melanoma" in cancer_type:
+            st.write("⏳ **Expected Recovery:** 4–6 months (depends on stage and spread)")
+            st.write("""
+            **Treatment Plan:**
+            - Surgical removal of the lesion.  
+            - Targeted therapy or immunotherapy for advanced stages.  
+            - Regular skin checkups every 3–6 months.  
+            - Maintain hydration, sun protection, and balanced nutrition.
+            """)
+
+        elif "Basal cell carcinoma" in cancer_type:
+            st.write("⏳ **Expected Recovery:** 2–4 months")
+            st.write("""
+            **Treatment Plan:**
+            - Excision or Mohs surgery for lesion removal.  
+            - Topical creams (Imiquimod or Fluorouracil).  
+            - Laser therapy for small lesions.  
+            - Regular follow-up to monitor recurrence.
+            """)
+
+        elif "Actinic keratoses" in cancer_type:
+            st.write("⏳ **Expected Recovery:** 1–3 months")
+            st.write("""
+            **Treatment Plan:**
+            - Cryotherapy (freezing the lesion).  
+            - Topical chemotherapy.  
+            - Avoid direct sun exposure.  
+            - Use high SPF sunscreen daily.
+            """)
+
+        elif "Benign" in cancer_type or "Vascular" in cancer_type:
+            st.write("⏳ **Expected Recovery:** 2–4 weeks")
+            st.write("""
+            **Treatment Plan:**
+            - Usually non-cancerous and may not need treatment.  
+            - Monitor for changes in size, color, or shape.  
+            - If irritated, minor surgical removal or laser therapy.  
+            - Maintain good skin hygiene.
+            """)
+
+        elif "Dermatofibroma" in cancer_type:
+            st.write("⏳ **Expected Recovery:** 3–5 weeks")
+            st.write("""
+            **Treatment Plan:**
+            - Typically harmless; removal only if bothersome.  
+            - Use soothing creams for irritation.  
+            - Protect the area from friction or trauma.
+            """)
+
+        else:
+            st.info("Please select a valid lesion type to view treatment suggestions.")
