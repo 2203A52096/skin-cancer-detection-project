@@ -105,47 +105,42 @@ def load_model():
 
 model = load_model()
 
-# ---------------- STYLES FOR NAVIGATION ----------------
-st.markdown("""
-<style>
-.sidebar .stButton button {
-    width: 100%;
-    margin-bottom: 10px;
-    border-radius: 12px;
-    font-weight: bold;
-    color: white;
-    font-size: 18px;
-    padding: 0.5em 0;
-    background: linear-gradient(90deg, #06D6A0, #118AB2);
-    transition: all 0.3s ease;
-}
+import streamlit as st
 
-.sidebar .stButton button:hover {
-    background: linear-gradient(90deg, #FFD93D, #6BCB77);
-    color: #1E293B;
-}
-</style>
-""", unsafe_allow_html=True)
+# ---------------- PAGE STATE ----------------
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "🏠 Home"
 
 # ---------------- FANCY NAVIGATION ----------------
 st.sidebar.markdown("## 📂 Navigation")
 
+# Custom HTML for navigation buttons
 pages = ["🏠 Home", "🔬 Prediction", "💊 Solution"]
 
-# Highlight selected page
-selected_page = None
-for page_name in pages:
-    if st.sidebar.button(page_name, key=page_name):
-        selected_page = page_name
+for p in pages:
+    color = "#06D6A0" if st.session_state.current_page != p else "#FFD93D"
+    st.sidebar.markdown(
+        f"""
+        <div style="
+            margin-bottom:10px;
+            border-radius:12px;
+            padding:10px;
+            text-align:center;
+            font-weight:bold;
+            font-size:18px;
+            background: linear-gradient(90deg, {color}, #118AB2);
+            color: white;
+            cursor: pointer;"
+            onclick="window.parent.location.href='#'">
+            {p}
+        </div>
+        """, unsafe_allow_html=True
+    )
 
-# Keep the page across reruns
-if "current_page" not in st.session_state:
-    st.session_state.current_page = "🏠 Home"
-
-if selected_page:
-    st.session_state.current_page = selected_page
-
-page = st.session_state.current_page
+# Simulate selection via session_state manually
+# You can add JS or streamlit buttons to set st.session_state.current_page
+# For demo, just use default value
+st.write(f"Selected page: {st.session_state.current_page}")
 
 
 
