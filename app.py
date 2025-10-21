@@ -17,14 +17,13 @@ body {
     color: #1E293B;
 }
 
-/* Main title and tagline - dark */
 /* Main title - dark */
 .main-title {
     text-align: center;
     font-weight: 900;
     font-size: 50px;
     margin: 10px 0;
-    color: #1E293B; /* Dark color */
+    color: #1E293B;
 }
 
 /* Tagline - dark */
@@ -33,17 +32,17 @@ body {
     font-size: 22px;
     font-style: italic;
     margin-bottom: 30px;
-    color: #1E293B; /* Dark color */
+    color: #1E293B;
 }
 
-/* Section headers - dark instead of gradient */
+/* Section headers - dark */
 h2 {
     font-weight: 700;
-    color: #1E293B; /* Dark color */
+    color: #1E293B;
     padding-top: 10px;
 }
 
-/* Keep highlight gradient for important words */
+/* Highlighted words */
 .highlight {
     display: inline-block;
     padding: 0.3em 0.7em;
@@ -54,7 +53,7 @@ h2 {
     margin: 2px 2px;
 }
 
-/* Card style sections */
+/* Card sections */
 .card {
     background-color: #ffffffcc;
     padding: 20px;
@@ -86,19 +85,6 @@ div[data-testid="stForm"] button {
     background: linear-gradient(90deg, #06D6A0, #118AB2);
     font-size: 18px;
 }
-
-
-st.markdown("""
-<div style="background: linear-gradient(90deg, #FFD93D, #6BCB77);
-            padding: 10px; border-radius: 10px;">
-<p style="color:#1E293B; font-weight:bold;">Select value:</p>
-</div>
-""", unsafe_allow_html=True)
-
-value = st.slider(" ", 0, 100, 50)
-
-
-
 </style>
 """, unsafe_allow_html=True)
 
@@ -154,6 +140,11 @@ if page == "🏠 Home":
 elif page == "🔬 Prediction":
     st.markdown("<h2>🔬 Skin Lesion Prediction</h2>", unsafe_allow_html=True)
     uploaded_file = st.file_uploader("📤 Upload a dermoscopic image", type=["jpg", "jpeg", "png"])
+    
+    # Light green slider
+    st.markdown('<div style="background-color:#B2F7EF; padding:10px; border-radius:10px;">', unsafe_allow_html=True)
+    value = st.slider("Select Confidence Threshold", 0, 100, 50)
+    st.markdown('</div>', unsafe_allow_html=True)
     
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
