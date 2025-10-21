@@ -90,34 +90,6 @@ div[data-testid="stForm"] button:hover {
     background: linear-gradient(90deg, #118AB2, #06D6A0);
 }
 
-/* Slider Gradient */
-input[type=range]::-webkit-slider-thumb {
-    background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF);
-    border-radius: 50%;
-}
-input[type=range]::-moz-range-thumb {
-    background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF);
-    border-radius: 50%;
-}
-input[type=range]::-ms-thumb {
-    background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF);
-    border-radius: 50%;
-}
-input[type=range]::-webkit-slider-runnable-track {
-    height: 8px;
-    border-radius: 4px;
-    background: linear-gradient(90deg, #FFD93D, #6BCB77, #4D96FF, #FF6B6B);
-}
-input[type=range]::-moz-range-track {
-    height: 8px;
-    border-radius: 4px;
-    background: linear-gradient(90deg, #FFD93D, #6BCB77, #4D96FF, #FF6B6B);
-}
-input[type=range]::-ms-track {
-    height: 8px;
-    border-radius: 4px;
-    background: linear-gradient(90deg, #FFD93D, #6BCB77, #4D96FF, #FF6B6B);
-}
 /* Slider Track & Handle - match highlight gradient */
 input[type=range]::-webkit-slider-thumb {
     background: linear-gradient(90deg, #FFD93D, #6BCB77);
