@@ -10,8 +10,7 @@ st.set_page_config(page_title="Safe Skin", page_icon="🩺", layout="wide")
 # --- Load Model ---
 @st.cache_resource
 def load_model():
-    model_path = os.path.join("model", "skincancercnn.h5")
-    model = tf.keras.models.load_model(model_path)
+    model_path = "skincancercnn.h5" 
     return model
 
 model = load_model()
