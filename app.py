@@ -3,6 +3,7 @@ from PIL import Image
 import numpy as np
 import tensorflow as tf
 import os
+import plotly.graph_objects as go
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(page_title="Safe Skin", page_icon="🩺", layout="wide")
@@ -10,9 +11,9 @@ st.set_page_config(page_title="Safe Skin", page_icon="🩺", layout="wide")
 # ---------------- CUSTOM STYLES ----------------
 st.markdown("""
 <style>
-/* Page Background */
+/* Page Background Gradient */
 body {
-    background-color: #FFFDF5;
+    background: linear-gradient(to right, #f9f9f9, #e0f7fa);
     color: #1E293B;
 }
 
@@ -31,28 +32,30 @@ body {
     color: #475569;
     font-style: italic;
     font-size: 22px;
-    margin-top: 0px;
+    margin-bottom: 30px;
 }
 
-/* Section headers */
-h2, h3 {
-    color: #0F172A;
-    font-weight: 700;
-    padding-top: 10px;
+/* Card style sections */
+.card {
+    background-color: #ffffffcc;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
 }
 
-/* Highlight important words as colorful badges */
+/* Highlight words */
 .highlight {
     display: inline-block;
-    padding: 0.25em 0.6em;
+    padding: 0.3em 0.7em;
     border-radius: 0.5em;
-    background: linear-gradient(90deg, #FFD166, #EF476F);
-    color: white;
+    background: linear-gradient(90deg, #FFDAB9, #FFB6C1);
+    color: #1E293B;
     font-weight: 700;
-    margin: 2px;
+    margin: 2px 2px;
 }
 
-/* Confidence output styling */
+/* Prediction confidence */
 .confidence {
     color: #118AB2;
     font-weight: 700;
@@ -64,15 +67,7 @@ h2, h3 {
     margin-top: 5px;
 }
 
-/* Add padding to sections */
-section .block-container {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-}
-
-/* Prediction button gradient */
+/* Buttons Gradient */
 div[data-testid="stForm"] button {
     width: 100%;
     height: 3em;
@@ -81,6 +76,7 @@ div[data-testid="stForm"] button {
     color: white;
     border: none;
     background: linear-gradient(90deg, #06D6A0, #118AB2);
+    font-size: 18px;
 }
 div[data-testid="stForm"] button:hover {
     background: linear-gradient(90deg, #118AB2, #06D6A0);
@@ -105,52 +101,47 @@ def load_model():
         st.warning(f"⚠️ Error loading model: {e}")
         return None
 
-# Load model
 model = load_model()
 
-# ---------------- SIDEBAR NAVIGATION ----------------
+# ---------------- NAVIGATION ----------------
 page = st.sidebar.selectbox(
     "Navigate Pages",
-    ["🏠 Home", "🔬 Prediction", "💊 Solution"],
-    format_func=lambda x: x,
-    key="nav",
-    help="Select the page you want to view"
+    ["🏠 Home", "🔬 Prediction", "💊 Solution"]
 )
 
 # ---------------- HOME PAGE ----------------
 if page == "🏠 Home":
     st.markdown("<h1 class='main-title'>🩺 Safe Skin</h1>", unsafe_allow_html=True)
     st.markdown("<p class='tagline'>AI-powered Skin Cancer Detection & Support System</p>", unsafe_allow_html=True)
-    st.write("---")
 
-    st.markdown("<h2>🌟 Features</h2>", unsafe_allow_html=True)
-    st.markdown("""
-    - Upload <span class='highlight'>dermoscopic skin images</span> for AI-based lesion classification.  
-    - Get <span class='highlight'>instant predictions</span> with confidence scores.  
-    - Access <span class='highlight'>treatment suggestions</span> and <span class='highlight'>estimated recovery times</span>.  
-    - Designed for <span class='highlight'>medical professionals</span> and <span class='highlight'>self-screening users</span>.
-    """, unsafe_allow_html=True)
+    # Features Card
+    st.markdown('<div class="card"><h3>🌟 Features</h3><ul>'
+                '<li>Upload <span class="highlight">dermoscopic images</span> for AI-based classification.</li>'
+                '<li>Get <span class="highlight">instant predictions</span> with confidence scores.</li>'
+                '<li>Access <span class="highlight">treatment suggestions</span> & <span class="highlight">recovery times</span>.</li>'
+                '<li>Designed for <span class="highlight">medical professionals</span> & <span class="highlight">self-screening users</span>.</li>'
+                '</ul></div>', unsafe_allow_html=True)
 
-    st.markdown("<h2>🎯 Goals</h2>", unsafe_allow_html=True)
-    st.markdown("""
-    - Promote <span class='highlight'>early detection</span> of skin cancer.  
-    - Empower dermatologists with <span class='highlight'>AI-assisted diagnostics</span>.  
-    - Provide <span class='highlight'>accessible care</span> in rural and remote areas.
-    """, unsafe_allow_html=True)
+    # Goals Card
+    st.markdown('<div class="card"><h3>🎯 Goals</h3><ul>'
+                '<li>Promote <span class="highlight">early detection</span>.</li>'
+                '<li>Empower dermatologists with <span class="highlight">AI-assisted diagnostics</span>.</li>'
+                '<li>Provide <span class="highlight">accessible care</span> in remote areas.</li>'
+                '</ul></div>', unsafe_allow_html=True)
 
-    st.markdown("<h2>🚀 Advantages</h2>", unsafe_allow_html=True)
-    st.markdown("""
-    - Improves <span class='highlight'>accuracy</span> and <span class='highlight'>speed</span> of diagnosis.  
-    - Reduces <span class='highlight'>human error</span> in lesion interpretation.  
-    - Integrates with <span class='highlight'>tele-dermatology</span> and <span class='highlight'>mobile apps</span>.  
-    - Includes <span class='highlight'>Grad-CAM visualizations</span> for AI decision transparency.
-    """, unsafe_allow_html=True)
+    # Advantages Card
+    st.markdown('<div class="card"><h3>🚀 Advantages</h3><ul>'
+                '<li>Improves <span class="highlight">accuracy</span> & <span class="highlight">speed</span> of diagnosis.</li>'
+                '<li>Reduces <span class="highlight">human error</span>.</li>'
+                '<li>Integrates with <span class="highlight">tele-dermatology</span> & <span class="highlight">mobile apps</span>.</li>'
+                '<li>Includes <span class="highlight">Grad-CAM visualizations</span>.</li>'
+                '</ul></div>', unsafe_allow_html=True)
 
 # ---------------- PREDICTION PAGE ----------------
 elif page == "🔬 Prediction":
     st.markdown("<h2>🔬 Skin Lesion Prediction</h2>", unsafe_allow_html=True)
-
     uploaded_file = st.file_uploader("📤 Upload a dermoscopic image", type=["jpg", "jpeg", "png"])
+    
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
         st.image(image, caption='📸 Uploaded Image', use_column_width=True)
@@ -161,7 +152,7 @@ elif page == "🔬 Prediction":
             img_array = np.array(img) / 255.0
             img_array = np.expand_dims(img_array, axis=0)
 
-            preds = model.predict(img_array)
+            preds = model.predict(img_array)[0]
             class_names = [
                 "Melanocytic nevi (Benign)",
                 "Melanoma (Malignant)",
@@ -177,6 +168,26 @@ elif page == "🔬 Prediction":
 
             st.markdown(f"### ✅ Prediction: <span class='highlight'>{predicted_class}</span>", unsafe_allow_html=True)
             st.markdown(f"<p class='confidence'>Confidence Score: {confidence*100:.2f}%</p>", unsafe_allow_html=True)
+
+            # Probability Bar Chart
+            fig = go.Figure(go.Bar(
+                x=preds*100,
+                y=class_names,
+                orientation='h',
+                marker=dict(
+                    color=['#FFDAB9', '#FFB6C1', '#F0E68C', '#B0E0E6', '#90EE90', '#D8BFD8', '#FFDEAD'],
+                    line=dict(color='rgb(248, 248, 249)', width=1)
+                )
+            ))
+            fig.update_layout(
+                title='Class Probabilities (%)',
+                xaxis=dict(title='Probability (%)'),
+                yaxis=dict(autorange="reversed"),
+                height=450,
+                plot_bgcolor='#f9f9f9',
+                paper_bgcolor='#f9f9f9'
+            )
+            st.plotly_chart(fig, use_container_width=True)
 
 # ---------------- SOLUTION PAGE ----------------
 elif page == "💊 Solution":
@@ -200,50 +211,22 @@ elif page == "💊 Solution":
         st.markdown(f"### 🧠 Selected: <span class='highlight'>{cancer_type}</span>", unsafe_allow_html=True)
         st.write("---")
 
-        # Plan mapping
         plans = {
-            "Melanoma": ("4–6 months", """
-- Surgical removal of affected tissue
-- Targeted therapy or immunotherapy
-- Regular skin checkups (3–6 months)
-- Balanced diet, hydration, sun protection
-"""),
-            "Basal cell carcinoma": ("2–4 months", """
-- Excision or Mohs surgery
-- Topical creams (Imiquimod, Fluorouracil)
-- Laser therapy for small lesions
-- Regular follow-up
-"""),
-            "Actinic keratoses": ("1–3 months", """
-- Cryotherapy
-- Topical chemotherapy
-- Sun protection and sunscreen
-"""),
-            "Benign": ("2–4 weeks", """
-- Usually harmless, monitor for changes
-- Minor removal if irritated
-- Maintain good skin hygiene
-"""),
-            "Vascular lesions": ("2–4 weeks", """
-- Typically harmless
-- Laser therapy if needed
-- Monitor for changes
-"""),
-            "Dermatofibroma": ("3–5 weeks", """
-- Usually harmless, removal if bothersome
-- Soothing creams for irritation
-- Protect from friction
-""")
+            "Melanoma": ("4–6 months", ["Surgical removal", "Targeted therapy/immunotherapy", "Regular checkups", "Sun protection & diet"]),
+            "Basal cell carcinoma": ("2–4 months", ["Excision or Mohs surgery", "Topical creams", "Laser therapy", "Regular follow-up"]),
+            "Actinic keratoses": ("1–3 months", ["Cryotherapy", "Topical chemotherapy", "Sun protection"]),
+            "Benign": ("2–4 weeks", ["Monitor changes", "Minor removal if irritated", "Maintain hygiene"]),
+            "Vascular lesions": ("2–4 weeks", ["Monitor changes", "Laser therapy if needed"]),
+            "Dermatofibroma": ("3–5 weeks", ["Monitor changes", "Removal if bothersome", "Use soothing creams"])
         }
 
-        # Determine plan
-        recovery, med_plan = None, None
+        recovery, meds = None, None
         for key in plans.keys():
             if key in cancer_type:
-                recovery, med_plan = plans[key]
+                recovery, meds = plans[key]
                 break
 
-        if recovery and med_plan:
-            st.markdown(f"⏳ **Expected Recovery:** <span class='highlight'>{recovery}</span>", unsafe_allow_html=True)
-            st.markdown("**Medication Plan:**")
-            st.write(med_plan)
+        if recovery and meds:
+            # Card-style display
+            st.markdown(f'<div class="card"><h3>⏳ Expected Recovery: <span class="highlight">{recovery}</span></h3>'
+                        '<ul>' + ''.join([f'<li>{m}</li>' for m in meds]) + '</ul></div>', unsafe_allow_html=True)
