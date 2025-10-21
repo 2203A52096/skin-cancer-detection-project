@@ -105,11 +105,26 @@ def load_model():
 
 model = load_model()
 
-# ---------------- NAVIGATION ----------------
-page = st.sidebar.selectbox(
-    "Navigate Pages",
-    ["🏠 Home", "🔬 Prediction", "💊 Solution"]
-)
+# ---------------- FANCY NAVIGATION ----------------
+st.sidebar.markdown("## 📂 Navigation")
+
+pages = ["🏠 Home", "🔬 Prediction", "💊 Solution"]
+
+# Highlight selected page
+selected_page = None
+for page_name in pages:
+    if st.sidebar.button(page_name, key=page_name):
+        selected_page = page_name
+
+# Remember the selected page across reruns
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "🏠 Home"
+
+if selected_page:
+    st.session_state.current_page = selected_page
+
+page = st.session_state.current_page
+
 
 # ---------------- HOME PAGE ----------------
 if page == "🏠 Home":
