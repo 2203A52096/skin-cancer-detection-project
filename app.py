@@ -102,13 +102,16 @@ st.sidebar.markdown("## 📂 Navigation")
 pages = ["🏠 Home", "🔬 Prediction", "💊 Solution"]
 
 for p in pages:
-    # Determine color: selected = bright, others = light green
-    color = "#FFD93D" if st.session_state.current_page == p else "#C6F6D5"
-
-    # Render as clickable HTML button
+    if st.session_state.current_page == p:
+        # Highlight selected page
+        color = "#FFD93D"  # bright yellow for selected
+    else:
+        color = "#C6F6D5"  # light green for others
+    
     if st.sidebar.button(p):
         st.session_state.current_page = p
 
+    # Render button with background color
     st.sidebar.markdown(
         f"""
         <div style="
@@ -128,8 +131,8 @@ for p in pages:
         unsafe_allow_html=True
     )
 
-# Set the active page
 page = st.session_state.current_page
+
 
 
 # ---------------- HOME PAGE ----------------
