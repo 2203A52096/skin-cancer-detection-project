@@ -17,22 +17,26 @@ body {
     color: #1E293B;
 }
 
-/* Main title */
+/* Main title with gradient */
 .main-title {
     text-align: center;
-    color: #D6336C;
     font-weight: 900;
     font-size: 50px;
     margin: 10px 0;
+    background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-/* Tagline */
+/* Tagline with gradient */
 .tagline {
     text-align: center;
-    color: #475569;
-    font-style: italic;
     font-size: 22px;
+    font-style: italic;
     margin-bottom: 30px;
+    background: linear-gradient(90deg, #6BCB77, #FFD93D, #FF6B6B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 /* Card style sections */
@@ -44,18 +48,27 @@ body {
     margin-bottom: 20px;
 }
 
-/* Highlight words */
+/* Gradient Section headers */
+h2 {
+    font-weight: 700;
+    background: linear-gradient(90deg, #FFD93D, #6BCB77, #4D96FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-top: 10px;
+}
+
+/* Highlight words with gradient background */
 .highlight {
     display: inline-block;
     padding: 0.3em 0.7em;
     border-radius: 0.5em;
-    background: linear-gradient(90deg, #FFDAB9, #FFB6C1);
+    background: linear-gradient(90deg, #FFD93D, #6BCB77);
     color: #1E293B;
     font-weight: 700;
     margin: 2px 2px;
 }
 
-/* Prediction confidence */
+/* Confidence styling */
 .confidence {
     color: #118AB2;
     font-weight: 700;
@@ -115,7 +128,7 @@ if page == "🏠 Home":
     st.markdown("<p class='tagline'>AI-powered Skin Cancer Detection & Support System</p>", unsafe_allow_html=True)
 
     # Features Card
-    st.markdown('<div class="card"><h3>🌟 Features</h3><ul>'
+    st.markdown('<div class="card"><h2>🌟 Features</h2><ul>'
                 '<li>Upload <span class="highlight">dermoscopic images</span> for AI-based classification.</li>'
                 '<li>Get <span class="highlight">instant predictions</span> with confidence scores.</li>'
                 '<li>Access <span class="highlight">treatment suggestions</span> & <span class="highlight">recovery times</span>.</li>'
@@ -123,14 +136,14 @@ if page == "🏠 Home":
                 '</ul></div>', unsafe_allow_html=True)
 
     # Goals Card
-    st.markdown('<div class="card"><h3>🎯 Goals</h3><ul>'
+    st.markdown('<div class="card"><h2>🎯 Goals</h2><ul>'
                 '<li>Promote <span class="highlight">early detection</span>.</li>'
                 '<li>Empower dermatologists with <span class="highlight">AI-assisted diagnostics</span>.</li>'
                 '<li>Provide <span class="highlight">accessible care</span> in remote areas.</li>'
                 '</ul></div>', unsafe_allow_html=True)
 
     # Advantages Card
-    st.markdown('<div class="card"><h3>🚀 Advantages</h3><ul>'
+    st.markdown('<div class="card"><h2>🚀 Advantages</h2><ul>'
                 '<li>Improves <span class="highlight">accuracy</span> & <span class="highlight">speed</span> of diagnosis.</li>'
                 '<li>Reduces <span class="highlight">human error</span>.</li>'
                 '<li>Integrates with <span class="highlight">tele-dermatology</span> & <span class="highlight">mobile apps</span>.</li>'
