@@ -15,14 +15,16 @@ body {
     background-color: #FFFDF5;
     color: #1E293B;
 }
+
 /* Main title */
 .main-title {
     text-align: center;
     color: #D6336C;
     font-weight: 900;
     font-size: 50px;
-    padding-bottom: 0px;
+    margin: 10px 0;
 }
+
 /* Tagline */
 .tagline {
     text-align: center;
@@ -31,21 +33,25 @@ body {
     font-size: 22px;
     margin-top: 0px;
 }
+
 /* Section headers */
 h2, h3 {
     color: #0F172A;
     font-weight: 700;
     padding-top: 10px;
 }
+
 /* Highlight important words as colorful badges */
 .highlight {
     display: inline-block;
-    padding: 0.2em 0.6em;
+    padding: 0.25em 0.6em;
     border-radius: 0.5em;
     background: linear-gradient(90deg, #FFD166, #EF476F);
     color: white;
     font-weight: 700;
+    margin: 2px;
 }
+
 /* Confidence output styling */
 .confidence {
     color: #118AB2;
@@ -54,7 +60,10 @@ h2, h3 {
     background-color: #E0F7FA;
     padding: 0.3em 0.6em;
     border-radius: 0.4em;
+    display: inline-block;
+    margin-top: 5px;
 }
+
 /* Add padding to sections */
 section .block-container {
     padding-top: 2rem;
@@ -62,6 +71,7 @@ section .block-container {
     padding-left: 2rem;
     padding-right: 2rem;
 }
+
 /* Prediction button gradient */
 div[data-testid="stForm"] button {
     width: 100%;
@@ -84,21 +94,21 @@ def load_model():
     model_path = "skincancercnn.h5"
 
     if not os.path.exists(model_path):
-        st.markdown("❌ <span class='highlight'>Model file not found!</span> Place 'skincancercnn.h5' in the same folder.", unsafe_allow_html=True)
+        st.info("❌ Model file not found! Place 'skincancercnn.h5' in the same folder.", icon="⚠️")
         return None
 
     try:
         model = tf.keras.models.load_model(model_path, compile=False)
-        st.markdown("✅ <span class='highlight'>Model loaded successfully!</span>", unsafe_allow_html=True)
+        st.success("✅ Model loaded successfully!", icon="🎉")
         return model
     except Exception as e:
-        st.markdown(f"⚠️ <span class='highlight'>Error loading model:</span> {e}", unsafe_allow_html=True)
+        st.warning(f"⚠️ Error loading model: {e}")
         return None
 
 # Load model
 model = load_model()
 
-# ---------------- SIDEBAR SLIDER NAVIGATION ----------------
+# ---------------- SIDEBAR NAVIGATION ----------------
 page = st.sidebar.selectbox(
     "Navigate Pages",
     ["🏠 Home", "🔬 Prediction", "💊 Solution"],
