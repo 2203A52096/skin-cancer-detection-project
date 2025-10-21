@@ -18,19 +18,40 @@ body {
 }
 
 /* Main title and tagline - dark */
+/* Main title - dark */
 .main-title {
     text-align: center;
     font-weight: 900;
     font-size: 50px;
     margin: 10px 0;
-    color: #1E293B;
+    color: #1E293B; /* Dark color */
 }
+
+/* Tagline - dark */
 .tagline {
     text-align: center;
     font-size: 22px;
     font-style: italic;
     margin-bottom: 30px;
+    color: #1E293B; /* Dark color */
+}
+
+/* Section headers - dark instead of gradient */
+h2 {
+    font-weight: 700;
+    color: #1E293B; /* Dark color */
+    padding-top: 10px;
+}
+
+/* Keep highlight gradient for important words */
+.highlight {
+    display: inline-block;
+    padding: 0.3em 0.7em;
+    border-radius: 0.5em;
+    background: linear-gradient(90deg, #FFD93D, #6BCB77);
     color: #1E293B;
+    font-weight: 700;
+    margin: 2px 2px;
 }
 
 /* Card style sections */
@@ -40,26 +61,6 @@ body {
     border-radius: 15px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     margin-bottom: 20px;
-}
-
-/* Gradient Section headers */
-h2 {
-    font-weight: 700;
-    background: linear-gradient(90deg, #FFD93D, #6BCB77, #4D96FF);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    padding-top: 10px;
-}
-
-/* Gradient Highlights */
-.highlight {
-    display: inline-block;
-    padding: 0.3em 0.7em;
-    border-radius: 0.5em;
-    background: linear-gradient(90deg, #FFD93D, #6BCB77);
-    color: #1E293B;
-    font-weight: 700;
-    margin: 2px 2px;
 }
 
 /* Confidence styling */
