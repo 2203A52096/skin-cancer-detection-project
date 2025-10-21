@@ -88,15 +88,15 @@ div[data-testid="stForm"] button {
 }
 
 
-# Display a slider with colored background using st.markdown
 st.markdown("""
-<div style="background: linear-gradient(90deg, #FFD93D, #6BCB77); 
+<div style="background: linear-gradient(90deg, #FFD93D, #6BCB77);
             padding: 10px; border-radius: 10px;">
 <p style="color:#1E293B; font-weight:bold;">Select value:</p>
 </div>
 """, unsafe_allow_html=True)
 
-value = st.slider(" ", 0, 100, 50)  # the slider itself
+value = st.slider(" ", 0, 100, 50)
+
 
 
 </style>
