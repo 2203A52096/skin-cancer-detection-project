@@ -99,7 +99,7 @@ if "current_page" not in st.session_state:
 
 st.sidebar.markdown("## 📂 Navigation")
 
-pages = ["🏠 Home", "🔬 Prediction", "💊 Solution"]
+pages = ["🏠 Home", "🔬 Prediction", " Solution"]
 
 for p in pages:
     if st.session_state.current_page == p:
