@@ -88,36 +88,16 @@ div[data-testid="stForm"] button {
 }
 
 
-/* Slider Track & Handle - match highlight gradient */
-input[type=range]::-webkit-slider-thumb {
-    background: linear-gradient(90deg, #FFD93D, #6BCB77);
-    border-radius: 50%;
-}
-input[type=range]::-moz-range-thumb {
-    background: linear-gradient(90deg, #FFD93D, #6BCB77);
-    border-radius: 50%;
-}
-input[type=range]::-ms-thumb {
-    background: linear-gradient(90deg, #FFD93D, #6BCB77);
-    border-radius: 50%;
-}
+# Display a slider with colored background using st.markdown
+st.markdown("""
+<div style="background: linear-gradient(90deg, #FFD93D, #6BCB77); 
+            padding: 10px; border-radius: 10px;">
+<p style="color:#1E293B; font-weight:bold;">Select value:</p>
+</div>
+""", unsafe_allow_html=True)
 
-/* Slider Track */
-input[type=range]::-webkit-slider-runnable-track {
-    height: 8px;
-    border-radius: 4px;
-    background: linear-gradient(90deg, #FFD93D, #6BCB77);
-}
-input[type=range]::-moz-range-track {
-    height: 8px;
-    border-radius: 4px;
-    background: linear-gradient(90deg, #FFD93D, #6BCB77);
-}
-input[type=range]::-ms-track {
-    height: 8px;
-    border-radius: 4px;
-    background: linear-gradient(90deg, #FFD93D, #6BCB77);
-}
+value = st.slider(" ", 0, 100, 50)  # the slider itself
+
 
 </style>
 """, unsafe_allow_html=True)
