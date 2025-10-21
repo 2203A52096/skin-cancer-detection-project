@@ -12,7 +12,7 @@ st.markdown("""
 <style>
 /* Page Background */
 body {
-    background-color: #FFF6F6;
+    background-color: #FFFDF5;
     color: #1E293B;
 }
 /* Main title */
@@ -37,16 +37,23 @@ h2, h3 {
     font-weight: 700;
     padding-top: 10px;
 }
-/* Highlight important words */
+/* Highlight important words as colorful badges */
 .highlight {
-    color: #D6336C;
-    font-weight: 800;
+    display: inline-block;
+    padding: 0.2em 0.6em;
+    border-radius: 0.5em;
+    background: linear-gradient(90deg, #FFD166, #EF476F);
+    color: white;
+    font-weight: 700;
 }
 /* Confidence output styling */
 .confidence {
-    color: #9333EA;
+    color: #118AB2;
     font-weight: 700;
     font-size: 20px;
+    background-color: #E0F7FA;
+    padding: 0.3em 0.6em;
+    border-radius: 0.4em;
 }
 /* Add padding to sections */
 section .block-container {
@@ -63,10 +70,10 @@ div[data-testid="stForm"] button {
     font-weight: bold;
     color: white;
     border: none;
-    background: linear-gradient(90deg, #D6336C, #9333EA);
+    background: linear-gradient(90deg, #06D6A0, #118AB2);
 }
 div[data-testid="stForm"] button:hover {
-    background: linear-gradient(90deg, #9333EA, #D6336C);
+    background: linear-gradient(90deg, #118AB2, #06D6A0);
 }
 </style>
 """, unsafe_allow_html=True)
@@ -77,15 +84,15 @@ def load_model():
     model_path = "skincancercnn.h5"
 
     if not os.path.exists(model_path):
-        st.markdown("❌ **Model file not found!** Place 'skincancercnn.h5' in the same folder.", unsafe_allow_html=True)
+        st.markdown("❌ <span class='highlight'>Model file not found!</span> Place 'skincancercnn.h5' in the same folder.", unsafe_allow_html=True)
         return None
 
     try:
         model = tf.keras.models.load_model(model_path, compile=False)
-        st.markdown("✅ **Model loaded successfully!**", unsafe_allow_html=True)
+        st.markdown("✅ <span class='highlight'>Model loaded successfully!</span>", unsafe_allow_html=True)
         return model
     except Exception as e:
-        st.markdown(f"⚠️ **Error loading model:** {e}", unsafe_allow_html=True)
+        st.markdown(f"⚠️ <span class='highlight'>Error loading model:</span> {e}", unsafe_allow_html=True)
         return None
 
 # Load model
@@ -107,22 +114,22 @@ if page == "🏠 Home":
     st.write("---")
 
     st.markdown("<h2>🌟 Features</h2>", unsafe_allow_html=True)
-    st.write("""
-    - Upload **dermoscopic skin images** for <span class='highlight'>AI-based lesion classification</span>.  
-    - Get **instant predictions** with **confidence scores**.  
-    - Access **treatment suggestions** and **estimated recovery times**.  
-    - Designed for both **medical professionals** and **self-screening users**.
+    st.markdown("""
+    - Upload <span class='highlight'>dermoscopic skin images</span> for AI-based lesion classification.  
+    - Get <span class='highlight'>instant predictions</span> with confidence scores.  
+    - Access <span class='highlight'>treatment suggestions</span> and <span class='highlight'>estimated recovery times</span>.  
+    - Designed for <span class='highlight'>medical professionals</span> and <span class='highlight'>self-screening users</span>.
     """, unsafe_allow_html=True)
 
     st.markdown("<h2>🎯 Goals</h2>", unsafe_allow_html=True)
-    st.write("""
-    - Promote **early detection** of skin cancer.  
+    st.markdown("""
+    - Promote <span class='highlight'>early detection</span> of skin cancer.  
     - Empower dermatologists with <span class='highlight'>AI-assisted diagnostics</span>.  
     - Provide <span class='highlight'>accessible care</span> in rural and remote areas.
     """, unsafe_allow_html=True)
 
     st.markdown("<h2>🚀 Advantages</h2>", unsafe_allow_html=True)
-    st.write("""
+    st.markdown("""
     - Improves <span class='highlight'>accuracy</span> and <span class='highlight'>speed</span> of diagnosis.  
     - Reduces <span class='highlight'>human error</span> in lesion interpretation.  
     - Integrates with <span class='highlight'>tele-dermatology</span> and <span class='highlight'>mobile apps</span>.  
