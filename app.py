@@ -105,6 +105,28 @@ def load_model():
 
 model = load_model()
 
+# ---------------- STYLES FOR NAVIGATION ----------------
+st.markdown("""
+<style>
+.sidebar .stButton button {
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    color: white;
+    font-size: 18px;
+    padding: 0.5em 0;
+    background: linear-gradient(90deg, #06D6A0, #118AB2);
+    transition: all 0.3s ease;
+}
+
+.sidebar .stButton button:hover {
+    background: linear-gradient(90deg, #FFD93D, #6BCB77);
+    color: #1E293B;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # ---------------- FANCY NAVIGATION ----------------
 st.sidebar.markdown("## 📂 Navigation")
 
@@ -116,7 +138,7 @@ for page_name in pages:
     if st.sidebar.button(page_name, key=page_name):
         selected_page = page_name
 
-# Remember the selected page across reruns
+# Keep the page across reruns
 if "current_page" not in st.session_state:
     st.session_state.current_page = "🏠 Home"
 
@@ -124,6 +146,7 @@ if selected_page:
     st.session_state.current_page = selected_page
 
 page = st.session_state.current_page
+
 
 
 # ---------------- HOME PAGE ----------------
