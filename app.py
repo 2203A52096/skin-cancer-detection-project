@@ -102,10 +102,37 @@ st.sidebar.markdown("## 📂 Navigation")
 pages = ["🏠 Home", "🔬 Prediction", "💊 Solution"]
 
 for p in pages:
+    if st.session_state.current_page == p:
+        # Highlight selected page
+        color = "#FFD93D"  # bright yellow for selected
+    else:
+        color = "#C6F6D5"  # light green for others
+    
     if st.sidebar.button(p):
         st.session_state.current_page = p
 
-page = st.session_state.current_page  # <-- set the page variable
+    # Render button with background color
+    st.sidebar.markdown(
+        f"""
+        <div style="
+            margin-bottom:10px;
+            border-radius:12px;
+            padding:10px;
+            text-align:center;
+            font-weight:bold;
+            font-size:18px;
+            background-color: {color};
+            color: #1E293B;
+            cursor: pointer;
+            ">
+            {p}
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+page = st.session_state.current_page
+
 
 # ---------------- HOME PAGE ----------------
 if page == "🏠 Home":
