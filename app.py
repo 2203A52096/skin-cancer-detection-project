@@ -137,14 +137,10 @@ if page == "🏠 Home":
                 '</ul></div>', unsafe_allow_html=True)
 
 # ---------------- PREDICTION PAGE ----------------
+# ---------------- PREDICTION PAGE ----------------
 elif page == "🔬 Prediction":
     st.markdown("<h2>🔬 Skin Lesion Prediction</h2>", unsafe_allow_html=True)
     uploaded_file = st.file_uploader("📤 Upload a dermoscopic image", type=["jpg", "jpeg", "png"])
-    
-    # Light green slider
-    st.markdown('<div style="background-color:#B2F7EF; padding:10px; border-radius:10px;">', unsafe_allow_html=True)
-    value = st.slider("Select Confidence Threshold", 0, 100, 50)
-    st.markdown('</div>', unsafe_allow_html=True)
     
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
@@ -191,6 +187,7 @@ elif page == "🔬 Prediction":
                 paper_bgcolor='#f9f9f9'
             )
             st.plotly_chart(fig, use_container_width=True)
+
 
 # ---------------- SOLUTION PAGE ----------------
 elif page == "💊 Solution":
