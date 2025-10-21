@@ -10,9 +10,22 @@ st.set_page_config(page_title="Safe Skin", page_icon="🩺", layout="wide")
 # --- Load Model ---
 @st.cache_resource
 def load_model():
-    model_path = "skincancercnn.h5" 
-    return model
+    model_path = "skincancercnn.h5"  # file is in root, not inside /model/
 
+    if not os.path.exists(model_path):
+        st.error("❌ Model file not found! Please make sure 'skincancercnn.h5' is in the same folder as app.py")
+        return None
+
+    try:
+        model = tf.keras.models.load_model(model_path, compile=False)
+        st.success("✅ Model loaded successfully!")
+        return model
+    except Exception as e:
+        st.error(f"⚠️ Error loading model: {e}")
+        return None
+
+
+# Example usage
 model = load_model()
 
 # --- Sidebar Navigation ---
