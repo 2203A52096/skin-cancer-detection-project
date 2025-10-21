@@ -77,15 +77,15 @@ def load_model():
     model_path = "skincancercnn.h5"
 
     if not os.path.exists(model_path):
-        st.error("❌ <b>Model file not found!</b> Place 'skincancercnn.h5' in the same folder as app.py", unsafe_allow_html=True)
+        st.markdown("❌ **Model file not found!** Place 'skincancercnn.h5' in the same folder.", unsafe_allow_html=True)
         return None
 
     try:
         model = tf.keras.models.load_model(model_path, compile=False)
-        st.success("✅ <b>Model loaded successfully!</b>", icon="✅", unsafe_allow_html=True)
+        st.markdown("✅ **Model loaded successfully!**", unsafe_allow_html=True)
         return model
     except Exception as e:
-        st.error(f"⚠️ <b>Error loading model:</b> {e}", unsafe_allow_html=True)
+        st.markdown(f"⚠️ **Error loading model:** {e}", unsafe_allow_html=True)
         return None
 
 # Load model
@@ -93,7 +93,7 @@ model = load_model()
 
 # ---------------- SIDEBAR SLIDER NAVIGATION ----------------
 page = st.sidebar.selectbox(
-    "<b>Navigate Pages</b>",
+    "Navigate Pages",
     ["🏠 Home", "🔬 Prediction", "💊 Solution"],
     format_func=lambda x: x,
     key="nav",
@@ -158,7 +158,7 @@ elif page == "🔬 Prediction":
             predicted_class = class_names[np.argmax(preds)]
             confidence = np.max(preds)
 
-            st.success(f"### ✅ Prediction: <span class='highlight'>{predicted_class}</span>", unsafe_allow_html=True)
+            st.markdown(f"### ✅ Prediction: <span class='highlight'>{predicted_class}</span>", unsafe_allow_html=True)
             st.markdown(f"<p class='confidence'>Confidence Score: {confidence*100:.2f}%</p>", unsafe_allow_html=True)
 
 # ---------------- SOLUTION PAGE ----------------
