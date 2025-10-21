@@ -86,9 +86,7 @@ div[data-testid="stForm"] button {
     background: linear-gradient(90deg, #06D6A0, #118AB2);
     font-size: 18px;
 }
-div[data-testid="stForm"] button:hover {
-    background: linear-gradient(90deg, #118AB2, #06D6A0);
-}
+
 
 /* Slider Track & Handle - match highlight gradient */
 input[type=range]::-webkit-slider-thumb {
