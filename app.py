@@ -17,26 +17,20 @@ body {
     color: #1E293B;
 }
 
-/* Main title with gradient */
+/* Main title and tagline - dark */
 .main-title {
     text-align: center;
     font-weight: 900;
     font-size: 50px;
     margin: 10px 0;
-    background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #1E293B;
 }
-
-/* Tagline with gradient */
 .tagline {
     text-align: center;
     font-size: 22px;
     font-style: italic;
     margin-bottom: 30px;
-    background: linear-gradient(90deg, #6BCB77, #FFD93D, #FF6B6B);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #1E293B;
 }
 
 /* Card style sections */
@@ -57,7 +51,7 @@ h2 {
     padding-top: 10px;
 }
 
-/* Highlight words with gradient background */
+/* Gradient Highlights */
 .highlight {
     display: inline-block;
     padding: 0.3em 0.7em;
@@ -94,6 +88,35 @@ div[data-testid="stForm"] button {
 div[data-testid="stForm"] button:hover {
     background: linear-gradient(90deg, #118AB2, #06D6A0);
 }
+
+/* Slider Gradient */
+input[type=range]::-webkit-slider-thumb {
+    background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF);
+    border-radius: 50%;
+}
+input[type=range]::-moz-range-thumb {
+    background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF);
+    border-radius: 50%;
+}
+input[type=range]::-ms-thumb {
+    background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF);
+    border-radius: 50%;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #FFD93D, #6BCB77, #4D96FF, #FF6B6B);
+}
+input[type=range]::-moz-range-track {
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #FFD93D, #6BCB77, #4D96FF, #FF6B6B);
+}
+input[type=range]::-ms-track {
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #FFD93D, #6BCB77, #4D96FF, #FF6B6B);
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -101,11 +124,9 @@ div[data-testid="stForm"] button:hover {
 @st.cache_resource
 def load_model():
     model_path = "skincancercnn.h5"
-
     if not os.path.exists(model_path):
         st.info("❌ Model file not found! Place 'skincancercnn.h5' in the same folder.", icon="⚠️")
         return None
-
     try:
         model = tf.keras.models.load_model(model_path, compile=False)
         st.success("✅ Model loaded successfully!", icon="🎉")
@@ -127,7 +148,6 @@ if page == "🏠 Home":
     st.markdown("<h1 class='main-title'>🩺 Safe Skin</h1>", unsafe_allow_html=True)
     st.markdown("<p class='tagline'>AI-powered Skin Cancer Detection & Support System</p>", unsafe_allow_html=True)
 
-    # Features Card
     st.markdown('<div class="card"><h2>🌟 Features</h2><ul>'
                 '<li>Upload <span class="highlight">dermoscopic images</span> for AI-based classification.</li>'
                 '<li>Get <span class="highlight">instant predictions</span> with confidence scores.</li>'
@@ -135,14 +155,12 @@ if page == "🏠 Home":
                 '<li>Designed for <span class="highlight">medical professionals</span> & <span class="highlight">self-screening users</span>.</li>'
                 '</ul></div>', unsafe_allow_html=True)
 
-    # Goals Card
     st.markdown('<div class="card"><h2>🎯 Goals</h2><ul>'
                 '<li>Promote <span class="highlight">early detection</span>.</li>'
                 '<li>Empower dermatologists with <span class="highlight">AI-assisted diagnostics</span>.</li>'
                 '<li>Provide <span class="highlight">accessible care</span> in remote areas.</li>'
                 '</ul></div>', unsafe_allow_html=True)
 
-    # Advantages Card
     st.markdown('<div class="card"><h2>🚀 Advantages</h2><ul>'
                 '<li>Improves <span class="highlight">accuracy</span> & <span class="highlight">speed</span> of diagnosis.</li>'
                 '<li>Reduces <span class="highlight">human error</span>.</li>'
@@ -182,7 +200,6 @@ elif page == "🔬 Prediction":
             st.markdown(f"### ✅ Prediction: <span class='highlight'>{predicted_class}</span>", unsafe_allow_html=True)
             st.markdown(f"<p class='confidence'>Confidence Score: {confidence*100:.2f}%</p>", unsafe_allow_html=True)
 
-            # Probability Bar Chart
             fig = go.Figure(go.Bar(
                 x=preds*100,
                 y=class_names,
@@ -240,6 +257,5 @@ elif page == "💊 Solution":
                 break
 
         if recovery and meds:
-            # Card-style display
             st.markdown(f'<div class="card"><h3>⏳ Expected Recovery: <span class="highlight">{recovery}</span></h3>'
                         '<ul>' + ''.join([f'<li>{m}</li>' for m in meds]) + '</ul></div>', unsafe_allow_html=True)
