@@ -62,18 +62,6 @@ h2 {
     margin-bottom: 20px;
 }
 
-/* Confidence styling */
-.confidence {
-    color: #118AB2;
-    font-weight: 700;
-    font-size: 20px;
-    background-color: #E0F7FA;
-    padding: 0.3em 0.6em;
-    border-radius: 0.4em;
-    display: inline-block;
-    margin-top: 5px;
-}
-
 /* Buttons Gradient */
 div[data-testid="stForm"] button {
     width: 100%;
@@ -105,44 +93,19 @@ def load_model():
 
 model = load_model()
 
-import streamlit as st
-
-# ---------------- PAGE STATE ----------------
+# ---------------- NAVIGATION ----------------
 if "current_page" not in st.session_state:
     st.session_state.current_page = "🏠 Home"
 
-# ---------------- FANCY NAVIGATION ----------------
 st.sidebar.markdown("## 📂 Navigation")
 
-# Custom HTML for navigation buttons
 pages = ["🏠 Home", "🔬 Prediction", "💊 Solution"]
 
 for p in pages:
-    color = "#06D6A0" if st.session_state.current_page != p else "#FFD93D"
-    st.sidebar.markdown(
-        f"""
-        <div style="
-            margin-bottom:10px;
-            border-radius:12px;
-            padding:10px;
-            text-align:center;
-            font-weight:bold;
-            font-size:18px;
-            background: linear-gradient(90deg, {color}, #118AB2);
-            color: white;
-            cursor: pointer;"
-            onclick="window.parent.location.href='#'">
-            {p}
-        </div>
-        """, unsafe_allow_html=True
-    )
+    if st.sidebar.button(p):
+        st.session_state.current_page = p
 
-# Simulate selection via session_state manually
-# You can add JS or streamlit buttons to set st.session_state.current_page
-# For demo, just use default value
-st.write(f"Selected page: {st.session_state.current_page}")
-
-
+page = st.session_state.current_page  # <-- set the page variable
 
 # ---------------- HOME PAGE ----------------
 if page == "🏠 Home":
@@ -151,7 +114,7 @@ if page == "🏠 Home":
 
     st.markdown('<div class="card"><h2>🌟 Features</h2><ul>'
                 '<li>Upload <span class="highlight">dermoscopic images</span> for AI-based classification.</li>'
-                '<li>Get <span class="highlight">instant predictions</span> with confidence scores.</li>'
+                '<li>Get <span class="highlight">instant predictions</span>.</li>'
                 '<li>Access <span class="highlight">treatment suggestions</span> & <span class="highlight">recovery times</span>.</li>'
                 '<li>Designed for <span class="highlight">medical professionals</span> & <span class="highlight">self-screening users</span>.</li>'
                 '</ul></div>', unsafe_allow_html=True)
@@ -169,7 +132,6 @@ if page == "🏠 Home":
                 '<li>Includes <span class="highlight">Grad-CAM visualizations</span>.</li>'
                 '</ul></div>', unsafe_allow_html=True)
 
-# ---------------- PREDICTION PAGE ----------------
 # ---------------- PREDICTION PAGE ----------------
 elif page == "🔬 Prediction":
     st.markdown("<h2>🔬 Skin Lesion Prediction</h2>", unsafe_allow_html=True)
@@ -197,10 +159,7 @@ elif page == "🔬 Prediction":
             ]
 
             predicted_class = class_names[np.argmax(preds)]
-            confidence = np.max(preds)
-
             st.markdown(f"### ✅ Prediction: <span class='highlight'>{predicted_class}</span>", unsafe_allow_html=True)
-            st.markdown(f"<p class='confidence'>Confidence Score: {confidence*100:.2f}%</p>", unsafe_allow_html=True)
 
             fig = go.Figure(go.Bar(
                 x=preds*100,
@@ -220,7 +179,6 @@ elif page == "🔬 Prediction":
                 paper_bgcolor='#f9f9f9'
             )
             st.plotly_chart(fig, use_container_width=True)
-
 
 # ---------------- SOLUTION PAGE ----------------
 elif page == "💊 Solution":
