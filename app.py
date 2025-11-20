@@ -422,46 +422,53 @@ elif st.session_state.page == "Treatment":
 # DOCTOR ADVICE PAGE
 # -----------------------------------------
 elif st.session_state.page == "Advice":
-    st.markdown("<div class='header-card'><h2 style='color:white;'>💡 Doctor's Advice</h2></div>", unsafe_allow_html=True)
+    st.markdown(
+        "<div class='header-card'><h2 style='color:white;'>💡 Doctor's Advice</h2></div>",
+        unsafe_allow_html=True
+    )
 
-    st.markdown("""
-    <div class='glass-box' 
-         style='padding:45px 50px; border-radius:15px;'>
-         
-        <h4 style='color:white; margin-bottom:18px; font-size:22px;'>
-            💊 Essential Dermatology Care Tips
-        </h4>
+    st.markdown(
+        """
+        <div class='glass-box' 
+             style='padding:45px 50px; border-radius:15px;'>
 
-        <p style='color:#ccc; margin-bottom:25px; font-size:17px; line-height:1.9;'>
-            Follow these dermatologist-approved guidelines to maintain healthy, glowing,
-            and well-protected skin:
-        </p>
+            <h4 style='color:white; margin-bottom:18px; font-size:22px;'>
+                💊 Essential Dermatology Care Tips
+            </h4>
 
-        <ul style='color:#ccc; font-size:17px; padding-left:30px; line-height:2.1; margin:0;'>
-            <li>Use a broad-spectrum sunscreen (SPF 30 or higher) every day.</li>
-            <li>Reapply sunscreen every 2–3 hours when outdoors.</li>
-            <li>Avoid peak sunlight exposure between 11 AM and 4 PM.</li>
-            <li>Moisturize twice daily to support the skin barrier.</li>
-            <li>Stay hydrated — drink at least 2–3 liters of water daily.</li>
-            <li>Avoid touching or picking at lesions, rashes, or acne.</li>
-            <li>Use gentle, fragrance-free cleansers to reduce irritation.</li>
-            <li>Exfoliate only 1–2 times per week — excessive scrubbing damages skin.</li>
-            <li>Wear protective clothing, hats, and sunglasses when outside.</li>
-            <li>Monitor moles for changes in symmetry, border, color, or size.</li>
-            <li>Avoid tanning beds — they significantly increase skin cancer risk.</li>
-            <li>Do patch tests before trying new skin care products.</li>
-            <li>Eat antioxidant-rich foods (berries, nuts, green vegetables).</li>
-            <li>Reduce stress — it can trigger acne, eczema, and psoriasis.</li>
-            <li>Sleep at least 7–8 hours daily to support skin recovery.</li>
-            <li>Use retinol or vitamin C serums at night for skin repair (if tolerated).</li>
-            <li>Keep your phone, pillowcase, and makeup brushes clean.</li>
-            <li>Avoid heavy makeup on irritated or inflamed skin.</li>
-            <li>Visit a dermatologist once a year for a full skin check.</li>
-            <li>Seek medical help if a spot bleeds, grows rapidly, or becomes painful.</li>
-        </ul>
+            <p style='color:#ccc; margin-bottom:25px; font-size:17px; line-height:1.9;'>
+                Follow these dermatologist-approved guidelines to maintain healthy, glowing,
+                and well-protected skin:
+            </p>
 
-    </div>
-    """, unsafe_allow_html=True)
+            <ul style='color:#ccc; font-size:17px; padding-left:30px; line-height:2.1; margin:0;'>
+                <li>Use a broad-spectrum sunscreen (SPF 30 or higher) every day.</li>
+                <li>Reapply sunscreen every 2–3 hours when outdoors.</li>
+                <li>Avoid peak sunlight exposure between 11 AM and 4 PM.</li>
+                <li>Moisturize twice daily to support the skin barrier.</li>
+                <li>Stay hydrated — drink at least 2–3 liters of water daily.</li>
+                <li>Avoid touching or picking at lesions, rashes, or acne.</li>
+                <li>Use gentle, fragrance-free cleansers to reduce irritation.</li>
+                <li>Exfoliate only 1–2 times per week — excessive scrubbing damages skin.</li>
+                <li>Wear protective clothing, hats, and sunglasses when outside.</li>
+                <li>Monitor moles for changes in symmetry, border, color, or size.</li>
+                <li>Avoid tanning beds — they significantly increase skin cancer risk.</li>
+                <li>Do patch tests before trying new skin care products.</li>
+                <li>Eat antioxidant-rich foods (berries, nuts, green vegetables).</li>
+                <li>Reduce stress — it can trigger acne, eczema, and psoriasis.</li>
+                <li>Sleep at least 7–8 hours daily to support skin recovery.</li>
+                <li>Use retinol or vitamin C serums at night for skin repair (if tolerated).</li>
+                <li>Keep your phone, pillowcase, and makeup brushes clean.</li>
+                <li>Avoid heavy makeup on irritated or inflamed skin.</li>
+                <li>Visit a dermatologist once a year for a full skin check.</li>
+                <li>Seek medical help if a spot bleeds, grows rapidly, or becomes painful.</li>
+            </ul>
+
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
 
 # -----------------------------------------
 # ABOUT PAGE
