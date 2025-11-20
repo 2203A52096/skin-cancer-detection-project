@@ -482,23 +482,22 @@ elif st.session_state.page == "Advice":
         "Seek medical help if a spot bleeds, grows rapidly, or becomes painful."
     ]
 
-    # ---------- DISPLAY EACH TIP IN SEPARATE CARD ---------- #
+    # ---------- DISPLAY EACH TIP AS A CARD ---------- #
     for tip in advice_list:
         st.markdown(
             f"""
             <div style="
-                background: rgba(255,255,255,0.08); 
+                background: rgba(255,255,255,0.1); 
                 padding:15px 18px; 
                 border-radius:12px; 
                 margin-bottom:12px;
-                border: 1px solid rgba(255,255,255,0.12);
+                border: 1px solid rgba(255,255,255,0.15);
             ">
-                <p style="color:#ddd; font-size:16px; margin:0; line-height:1.6;">
+                <p style="color:#ddd; font-size:16px; margin:0; line-height:1.7;">
                     {tip}
                 </p>
             </div>
-            """,
-            unsafe_allow_html=True
+            """, unsafe_allow_html=True
         )
 
 # -----------------------------------------
