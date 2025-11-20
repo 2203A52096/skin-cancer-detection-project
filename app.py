@@ -425,8 +425,9 @@ elif st.session_state.page == "Advice":
     st.markdown("<div class='header-card'><h2 style='color:white;'>💡 Doctor's Advice</h2></div>", unsafe_allow_html=True)
 
     st.markdown("""
-    <div class='glass-box' style='padding:40px 45px; border-radius:15px;'>
-
+    <div class='glass-box' 
+         style='padding:45px 50px; border-radius:15px;'>
+         
         <h4 style='color:white; margin-bottom:18px; font-size:22px;'>
             💊 Essential Dermatology Care Tips
         </h4>
@@ -436,7 +437,7 @@ elif st.session_state.page == "Advice":
             and well-protected skin:
         </p>
 
-        <ul style='color:#ccc; font-size:17px; padding-left:25px; line-height:2.05; margin:0;'>
+        <ul style='color:#ccc; font-size:17px; padding-left:30px; line-height:2.1; margin:0;'>
             <li>Use a broad-spectrum sunscreen (SPF 30 or higher) every day.</li>
             <li>Reapply sunscreen every 2–3 hours when outdoors.</li>
             <li>Avoid peak sunlight exposure between 11 AM and 4 PM.</li>
@@ -461,8 +462,6 @@ elif st.session_state.page == "Advice":
 
     </div>
     """, unsafe_allow_html=True)
-
-
 
 # -----------------------------------------
 # ABOUT PAGE
