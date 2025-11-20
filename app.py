@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 # ---------------------------------------------------------
-# GLOBAL DARK UI CSS (Glassmorphism + Gradient)
+# GLOBAL CSS (Dark Mode + Glass UI)
 # ---------------------------------------------------------
 st.markdown("""
 <style>
@@ -100,7 +100,7 @@ html, body, [class*="css"] {
 """, unsafe_allow_html=True)
 
 # ---------------------------------------------------------
-# AI-LIKE Image Analyzer (NO ML Model)
+# SIMPLE ANALYZER (Hidden Logic)
 # ---------------------------------------------------------
 def analyze_image(img):
     img_resized = img.resize((256, 256))
@@ -114,9 +114,7 @@ def analyze_image(img):
 
     texture_img = img_resized.filter(ImageFilter.FIND_EDGES)
     texture = np.array(texture_img).var()
-
     edges = np.array(texture_img).mean() / 255
-
     center = gray[100:150, 100:150].mean()
     edge_illum = (gray[0:50].mean() + gray[-50:].mean()) / 2
 
@@ -142,14 +140,14 @@ def analyze_image(img):
     return "Nevus"
 
 # ---------------------------------------------------------
-# NAVIGATION MENU (TOP BUTTONS)
+# NAVIGATION (Same window)
 # ---------------------------------------------------------
 st.markdown("""
 <div style="text-align:center;">
     <a class="nav-btn" href="?page=Home">🏠 Home</a>
     <a class="nav-btn" href="?page=Upload">📤 Upload & Predict</a>
-    <a class="nav-btn" href="?page=Treatment">💊 Treatment Plan</a>
-    <a class="nav-btn" href="?page=Advice">👨‍⚕️ Doctor’s Advice</a>
+    <a class="nav-btn" href="?page=Treatment">🩺 Treatment Plan</a>
+    <a class="nav-btn" href="?page=Advice">💡 Doctor’s Advice</a>
     <a class="nav-btn" href="?page=About">ℹ️ About</a>
 </div>
 """, unsafe_allow_html=True)
@@ -164,100 +162,111 @@ if page == "Home":
     <div class='header-card'>
         <h1 style='color:white; text-align:center;'>🩺 Skin Health AI</h1>
         <p style='color:#ddd; text-align:center;'>
-            Your stylish skin wellness companion.<br>
-            Analyze, understand and explore your skin health.
+            Your smart companion for early skin health insights.<br>
+            Understand patterns, identify risks, and explore care guidance.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
     col1, col2 = st.columns(2)
-
     with col1:
         st.markdown("""
         <div class='glass-box'>
-        <h3 style='color:white;'>📤 Upload & Predict</h3>
-        <p style='color:#ccc;'>Upload your skin lesion image and get an instant prediction.</p>
+            <h3 style='color:white;'>📤 Upload & Predict</h3>
+            <p style='color:#ccc;'>Upload a skin image to receive an instant analysis based on texture, color, and surface patterns.</p>
         </div>
         """, unsafe_allow_html=True)
 
     with col2:
         st.markdown("""
         <div class='glass-box'>
-        <h3 style='color:white;'>💊 Treatment Guidance</h3>
-        <p style='color:#ccc;'>Learn recommended treatment paths for each condition.</p>
+            <h3 style='color:white;'>🩺 Treatment & Care</h3>
+            <p style='color:#ccc;'>Get tailored treatment suggestions and preventive care steps based on your detected condition.</p>
         </div>
         """, unsafe_allow_html=True)
 
 # ---------------------------------------------------------
-# UPLOAD & PREDICT PAGE
+# UPLOAD PAGE
 # ---------------------------------------------------------
 elif page == "Upload":
-    st.markdown(
-        "<div class='header-card'><h2 style='color:white;'>📤 Upload & Predict</h2></div>",
-        unsafe_allow_html=True
-    )
+    st.markdown("<div class='header-card'><h2 style='color:white;'>📤 Upload & Predict</h2></div>", unsafe_allow_html=True)
 
-    uploaded = st.file_uploader("Upload your skin image", type=["jpg", "jpeg", "png"])
+    st.markdown("""
+    <div class='glass-box' style='color:#ccc;'>
+        Upload a clear image of the affected skin area. 
+        The system analyses color variations, surface texture, and edge structures 
+        to determine the most likely skin condition.
+    </div>
+    """, unsafe_allow_html=True)
+
+    uploaded = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
     if uploaded:
         img = Image.open(uploaded).convert("RGB")
-        st.image(img, width=350)
+        st.image(img, use_column_width=True)
 
-        with st.spinner("Analyzing image..."):
+        with st.spinner("Analyzing..."):
             result = analyze_image(img)
 
         st.session_state["result"] = result
 
-        st.markdown(f"<div class='result-label'>Predicted Condition: {result}</div>",
-                    unsafe_allow_html=True)
+        st.markdown(
+            f"<h4 style='color:white; margin-top:20px;'>The predicted skin condition is:</h4>",
+            unsafe_allow_html=True
+        )
+
+        st.markdown(f"<div class='result-label'>{result}</div>", unsafe_allow_html=True)
 
 # ---------------------------------------------------------
-# TREATMENT PLAN PAGE
+# TREATMENT PAGE
 # ---------------------------------------------------------
 elif page == "Treatment":
-    st.markdown(
-        "<div class='header-card'><h2 style='color:white;'>💊 Treatment Plan</h2></div>",
-        unsafe_allow_html=True
-    )
+    st.markdown("<div class='header-card'><h2 style='color:white;'>🩺 Treatment Plan</h2></div>", unsafe_allow_html=True)
 
-    treatments = {
-        "Melanoma": "Surgery, immunotherapy, targeted therapy.",
-        "Vascular Lesion": "Laser therapy or light-based treatment.",
-        "Actinic Keratosis": "Cryotherapy and topical medications.",
-        "Squamous Cell Carcinoma": "Surgery, radiation therapy.",
-        "Basal Cell Carcinoma": "Excision, freezing, topical chemo.",
-        "Seborrheic Keratosis": "Laser or cryotherapy if removal needed.",
-        "Pigmented Benign Keratosis": "Usually harmless; surface removal possible.",
-        "Dermatofibroma": "Harmless; remove only if discomfort.",
-        "Nevus": "Monitor or remove based on doctor’s suggestion."
-    }
+    if "result" not in st.session_state:
+        st.warning("Please upload an image first.")
+    else:
+        condition = st.session_state["result"]
 
-    choice = st.selectbox("Select a condition", list(treatments.keys()))
+        st.markdown(f"""
+        <div class='glass-box'>
+            <h3 style='color:white;'>Recommended Treatment for {condition}</h3>
+            <p style='color:#ccc;'>
+        """, unsafe_allow_html=True)
 
-    st.markdown(f"""
-    <div class='glass-box'>
-        <h3 style='color:white;'>Treatment for {choice}</h3>
-        <p style='color:#ddd;'>{treatments[choice]}</p>
-    </div>
-    """, unsafe_allow_html=True)
+        # Treatment text (general)
+        treatments = {
+            "Melanoma": "Seek an immediate dermatology consultation. Early surgical removal is essential.",
+            "Vascular Lesion": "Laser therapy or topical medications may help reduce redness and appearance.",
+            "Actinic Keratosis": "Cryotherapy, topical treatments, or laser removal are commonly suggested.",
+            "Squamous Cell Carcinoma": "Requires medical treatment such as excision, Mohs surgery, or radiation.",
+            "Basal Cell Carcinoma": "Often treated with excision, topical medications, or targeted therapy.",
+            "Seborrheic Keratosis": "Usually harmless; cryotherapy or curettage may be used for cosmetic removal.",
+            "Pigmented Benign Keratosis": "Generally non-dangerous; removal optional through cryotherapy.",
+            "Dermatofibroma": "Harmless; can be surgically removed if causing discomfort.",
+            "Nevus": "Benign; monitor for shape or color changes."
+        }
+
+        st.markdown(f"""
+            <p style='color:#ccc;'>{treatments.get(condition, "General care advice applies.")}</p>
+        </div>
+        """, unsafe_allow_html=True)
 
 # ---------------------------------------------------------
 # DOCTOR’S ADVICE PAGE
 # ---------------------------------------------------------
 elif page == "Advice":
-    st.markdown(
-        "<div class='header-card'><h2 style='color:white;'>👨‍⚕️ Doctor’s Advice</h2></div>",
-        unsafe_allow_html=True
-    )
+    st.markdown("<div class='header-card'><h2 style='color:white;'>💡 Doctor’s Advice</h2></div>", unsafe_allow_html=True)
 
     st.markdown("""
     <div class='glass-box'>
+        <h3 style='color:white;'>General Dermatologist Advice</h3>
         <ul style='color:#ddd;'>
-            <li>Monitor sudden changes in shape, size, or color.</li>
-            <li>Avoid peak sunlight (12 PM – 4 PM).</li>
-            <li>Use sunscreen SPF 30+ every day.</li>
-            <li>Never scratch or pick lesions.</li>
-            <li>Consult a dermatologist if abnormalities persist.</li>
+            <li>Use sunscreen daily with SPF 30 or above.</li>
+            <li>Avoid direct sunlight during peak hours (11 AM – 4 PM).</li>
+            <li>Moisturize regularly to maintain skin barrier health.</li>
+            <li>Monitor moles for ABCDE changes (Asymmetry, Border, Color, Diameter, Evolution).</li>
+            <li>Consult a dermatologist if a lesion changes quickly.</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -266,19 +275,16 @@ elif page == "Advice":
 # ABOUT PAGE
 # ---------------------------------------------------------
 elif page == "About":
-    st.markdown(
-        "<div class='header-card'><h2 style='color:white;'>ℹ️ About</h2></div>",
-        unsafe_allow_html=True
-    )
+    st.markdown("<div class='header-card'><h2 style='color:white;'>ℹ️ About</h2></div>", unsafe_allow_html=True)
 
     st.markdown("""
     <div class='glass-box'>
         <p style='color:#ddd;'>
-            Skin Health AI is a smart and stylish visual assistant designed
-            to help raise awareness of skin lesions, treatment options, 
-            and general skin health guidance.
+        Skin Health AI helps users interpret skin patterns visually and promotes awareness for early detection.
+        It provides quick insights, care suggestions, and dermatologist-friendly information in a simple interface.
+        <br><br>
+        <b>Developed for educational and awareness purposes.</b>
         </p>
-        <p style='color:#bbb;'>Designed with ❤️ for awareness & self-care.</p>
     </div>
     """, unsafe_allow_html=True)
 
