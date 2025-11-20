@@ -81,17 +81,20 @@ div[data-testid="stForm"] button {
 def load_model():
     model_path = "skincancercnn.h5"
     if not os.path.exists(model_path):
-        st.info("❌ Model file not found! Place 'skincancercnn.h5' in the same folder.", icon="⚠️")
+        # return None but also show the info (outside function we'll show a message too)
         return None
     try:
+        # compile=False is fine if you only predict
         model = tf.keras.models.load_model(model_path, compile=False)
-        st.success("✅ Model loaded successfully!", icon="🎉")
         return model
     except Exception as e:
-        st.warning(f"⚠️ Error loading model: {e}")
+        # return None and log the exception to Streamlit
+        st.error(f"⚠️ Error loading model: {e}")
         return None
 
 model = load_model()
+if model is None:
+    st.warning("❌ Model file not found or failed to load. Place 'skincancercnn.h5' in the app folder.", icon="⚠️")
 
 # ---------------- NAVIGATION ----------------
 if "current_page" not in st.session_state:
@@ -100,11 +103,10 @@ if "current_page" not in st.session_state:
 st.sidebar.markdown("## 📂 Navigation")
 
 # Use radio for single selection
-page = st.sidebar.radio(
-    "",
-    ["🏠 Home", "🔬 Prediction", "💊 Solution"],
-    index=["🏠 Home", "🔬 Prediction", "💊 Solution"].index(st.session_state.current_page)
-)
+pages = ["🏠 Home", "🔬 Prediction", "💊 Solution"]
+# make sure index is valid
+default_index = pages.index(st.session_state.current_page) if st.session_state.current_page in pages else 0
+page = st.sidebar.radio("", pages, index=default_index)
 
 # Save selection to session_state
 st.session_state.current_page = page
@@ -156,49 +158,74 @@ if page == "🏠 Home":
 elif page == "🔬 Prediction":
     st.markdown("<h2>🔬 Skin Lesion Prediction</h2>", unsafe_allow_html=True)
     uploaded_file = st.file_uploader("📤 Upload a dermoscopic image", type=["jpg", "jpeg", "png"])
-    
+
+    class_names = [
+        "Melanocytic nevi (Benign)",
+        "Melanoma (Malignant)",
+        "Benign keratosis (Benign)",
+        "Basal cell carcinoma (Malignant)",
+        "Actinic keratoses (Precancerous)",
+        "Vascular lesions (Benign)",
+        "Dermatofibroma (Benign)"
+    ]
+
     if uploaded_file is not None:
-        image = Image.open(uploaded_file)
-        st.image(image, caption='📸 Uploaded Image', use_column_width=True)
+        try:
+            image = Image.open(uploaded_file)
+        except Exception as e:
+            st.error(f"Unable to open image: {e}")
+            image = None
 
-        if st.button("🔍 Predict"):
-            st.info("🧠 Analyzing your image...")
-            img = image.resize((224, 224))
-            img_array = np.array(img) / 255.0
-            img_array = np.expand_dims(img_array, axis=0)
+        if image is not None:
+            # Convert to RGB to avoid issues with RGBA or palette images
+            image_rgb = image.convert("RGB")
+            st.image(image_rgb, caption='📸 Uploaded Image', use_column_width=True)
 
-            preds = model.predict(img_array)[0]
-            class_names = [
-                "Melanocytic nevi (Benign)",
-                "Melanoma (Malignant)",
-                "Benign keratosis (Benign)",
-                "Basal cell carcinoma (Malignant)",
-                "Actinic keratoses (Precancerous)",
-                "Vascular lesions (Benign)",
-                "Dermatofibroma (Benign)"
-            ]
+            # Disable predict button if model not loaded
+            if model is None:
+                st.error("Model not available. Put 'skincancercnn.h5' in the app folder and restart the app.")
+            else:
+                if st.button("🔍 Predict"):
+                    st.info("🧠 Analyzing your image...")
 
-            predicted_class = class_names[np.argmax(preds)]
-            st.markdown(f"### ✅ Prediction: <span class='highlight'>{predicted_class}</span>", unsafe_allow_html=True)
+                    # Preprocess image safely
+                    img = image_rgb.resize((224, 224))
+                    img_array = np.array(img).astype("float32") / 255.0
+                    img_array = np.expand_dims(img_array, axis=0)
 
-            fig = go.Figure(go.Bar(
-                x=preds*100,
-                y=class_names,
-                orientation='h',
-                marker=dict(
-                    color=['#FFDAB9', '#FFB6C1', '#F0E68C', '#B0E0E6', '#90EE90', '#D8BFD8', '#FFDEAD'],
-                    line=dict(color='rgb(248, 248, 249)', width=1)
-                )
-            ))
-            fig.update_layout(
-                title='Class Probabilities (%)',
-                xaxis=dict(title='Probability (%)'),
-                yaxis=dict(autorange="reversed"),
-                height=450,
-                plot_bgcolor='#f9f9f9',
-                paper_bgcolor='#f9f9f9'
-            )
-            st.plotly_chart(fig, use_container_width=True)
+                    # Get predictions and ensure probabilities
+                    raw_preds = model.predict(img_array)[0]
+                    # If model outputs logits, convert via softmax
+                    if not np.isclose(np.sum(raw_preds), 1.0):
+                        preds = tf.nn.softmax(raw_preds).numpy()
+                    else:
+                        preds = raw_preds
+
+                    # Defensive: ensure preds length matches class_names
+                    if preds.shape[0] != len(class_names):
+                        st.error(f"Model output length ({preds.shape[0]}) does not match number of classes ({len(class_names)}).")
+                    else:
+                        predicted_class = class_names[np.argmax(preds)]
+                        st.markdown(f"### ✅ Prediction: <span class='highlight'>{predicted_class}</span>", unsafe_allow_html=True)
+
+                        fig = go.Figure(go.Bar(
+                            x=(preds * 100),
+                            y=class_names,
+                            orientation='h',
+                            marker=dict(
+                                color=['#FFDAB9', '#FFB6C1', '#F0E68C', '#B0E0E6', '#90EE90', '#D8BFD8', '#FFDEAD'],
+                                line=dict(color='rgb(248, 248, 249)', width=1)
+                            )
+                        ))
+                        fig.update_layout(
+                            title='Class Probabilities (%)',
+                            xaxis=dict(title='Probability (%)'),
+                            yaxis=dict(autorange="reversed"),
+                            height=450,
+                            plot_bgcolor='#f9f9f9',
+                            paper_bgcolor='#f9f9f9'
+                        )
+                        st.plotly_chart(fig, use_container_width=True)
 
 # ---------------- SOLUTION PAGE ----------------
 elif page == "💊 Solution":
@@ -207,15 +234,7 @@ elif page == "💊 Solution":
 
     cancer_type = st.selectbox(
         "Select Skin Cancer Type",
-        [
-            "Melanocytic nevi (Benign)",
-            "Melanoma (Malignant)",
-            "Benign keratosis (Benign)",
-            "Basal cell carcinoma (Malignant)",
-            "Actinic keratoses (Precancerous)",
-            "Vascular lesions (Benign)",
-            "Dermatofibroma (Benign)"
-        ]
+        class_names
     )
 
     if cancer_type:
@@ -240,3 +259,5 @@ elif page == "💊 Solution":
         if recovery and meds:
             st.markdown(f'<div class="card"><h3>⏳ Expected Recovery: <span class="highlight">{recovery}</span></h3>'
                         '<ul>' + ''.join([f'<li>{m}</li>' for m in meds]) + '</ul></div>', unsafe_allow_html=True)
+        else:
+            st.info("No specific plan found for the selected type. Please consult a dermatologist for a tailored plan.")
