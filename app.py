@@ -304,56 +304,22 @@ elif st.session_state.page == "Upload":
 # -----------------------------------------
 elif st.session_state.page == "Treatment":
 
-    # ---------------- STYLES (Safe white button) ---------------- #
     st.markdown("""
-    <style>
-
-    /* White button for this page only */
-    .treatment-btn button {
-        background-color: #ffffff !important;
-        color: #000000 !important;
-        border: 1px solid #cccccc !important;
-        padding: 12px 20px !important;
-        border-radius: 10px !important;
-        font-weight: 600 !important;
-        cursor: pointer !important;
-        width: 100% !important;
-        transition: 0.2s ease-in-out;
-    }
-
-    /* Hover stays visible */
-    .treatment-btn button:hover {
-        background-color: #f2f2f2 !important;
-        border-color: #bbbbbb !important;
-    }
-
-    /* Active click */
-    .treatment-btn button:active {
-        background-color: #e6e6e6 !important;
-        border-color: #aaaaaa !important;
-    }
-
-    </style>
-    """, unsafe_allow_html=True)
-
-    # ---------------- HEADER ---------------- #
-    st.markdown("""
-    <div class='header-card'>
-        <h2 style='color:white; text-align:center;'>🩺 Treatment Plan</h2>
+    <div class='header-card' style='margin-bottom:25px;'>
+        <h2 style='color:white;'>🩺 Treatment Plan</h2>
     </div>
     """, unsafe_allow_html=True)
 
-    # ---------------- INTRO ---------------- #
     st.markdown("""
-    <div class='glass-box'>
+    <div class='glass-box' style='padding:20px; margin-bottom:20px;'>
         <p style='color:#ccc; font-size:16px;'>
-            Select the predicted or diagnosed skin condition from the dropdown below.  
-            You will receive a detailed treatment plan, precautions, and when to seek medical help.
+            Select the predicted or known skin condition to view recommended
+            treatment options and medical guidance.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
-    # ---------------- DROPDOWN ---------------- #
+    # Dropdown list
     condition_list = [
         "Melanoma",
         "Vascular Lesion",
@@ -368,96 +334,85 @@ elif st.session_state.page == "Treatment":
 
     selected_cond = st.selectbox("Select Skin Condition:", condition_list)
 
-    # ---------------- TREATMENT DATA ---------------- #
+    # Treatment dictionary (with color styling fixed)
     treatment = {
         "Melanoma": """
-        <ul>
-            <li>Immediate dermatology consultation is essential.</li>
-            <li>Early surgical removal is the primary treatment.</li>
-            <li>Sentinel lymph node biopsy may be required.</li>
-            <li>Follow-up every 3–6 months is recommended.</li>
-            <li>Check entire body for new lesions regularly.</li>
+        <ul style='color:#ccc; line-height:1.6;'>
+            <li>Immediate dermatology consultation is recommended.</li>
+            <li>Surgical removal of the lesion as early as possible.</li>
+            <li>Lymph node evaluation depending on melanoma depth.</li>
+            <li>Regular follow-up every 3–6 months.</li>
         </ul>
         """,
 
         "Vascular Lesion": """
-        <ul>
+        <ul style='color:#ccc; line-height:1.6;'>
             <li>Laser treatment is the most effective option.</li>
-            <li>Cold compress helps reduce redness and irritation.</li>
-            <li>Anti-redness creams or gels may soothe discomfort.</li>
+            <li>Anti-redness topical creams can reduce irritation.</li>
+            <li>Cold compress may help with swelling.</li>
         </ul>
         """,
 
         "Actinic Keratosis": """
-        <ul>
-            <li>Cryotherapy (freezing) is a common treatment.</li>
-            <li>Topical medications like 5-FU or imiquimod are prescribed.</li>
-            <li>Avoid sun exposure and use SPF 50+ sunscreen daily.</li>
-            <li>Regular monitoring is important to prevent progression.</li>
+        <ul style='color:#ccc; line-height:1.6;'>
+            <li>Cryotherapy (freezing the lesion).</li>
+            <li>Topical medications like 5-FU or imiquimod.</li>
+            <li>Daily use of SPF 50+ sunscreen.</li>
         </ul>
         """,
 
         "Squamous Cell Carcinoma": """
-        <ul>
-            <li>Surgical removal remains the primary treatment.</li>
-            <li>Mohs surgery recommended for facial or sensitive areas.</li>
-            <li>Possible radiation therapy in advanced cases.</li>
-            <li>Frequent follow-ups every 3–6 months.</li>
+        <ul style='color:#ccc; line-height:1.6;'>
+            <li>Surgical removal is the primary treatment.</li>
+            <li>Mohs surgery for sensitive or facial areas.</li>
+            <li>Follow-up every 3–6 months is recommended.</li>
         </ul>
         """,
 
         "Basal Cell Carcinoma": """
-        <ul>
-            <li>Usually treated with minor surgical removal.</li>
-            <li>Topical treatments for superficial lesions.</li>
-            <li>Radiation therapy for large or complex lesions.</li>
-            <li>Good prognosis with timely treatment.</li>
+        <ul style='color:#ccc; line-height:1.6;'>
+            <li>Outpatient surgical excision.</li>
+            <li>Topical therapy for superficial types.</li>
+            <li>Radiation therapy for large or difficult areas.</li>
         </ul>
         """,
 
         "Seborrheic Keratosis": """
-        <ul>
-            <li>Harmless and often needs no treatment.</li>
-            <li>Cryotherapy or laser removal is optional.</li>
-            <li>Avoid picking or scratching to prevent irritation.</li>
+        <ul style='color:#ccc; line-height:1.6;'>
+            <li>Harmless; treatment optional.</li>
+            <li>Cryotherapy or laser removal for cosmetic reasons.</li>
+            <li>Avoid scratching or picking.</li>
         </ul>
         """,
 
         "Pigmented Benign Keratosis": """
-        <ul>
-            <li>Generally harmless; treatment is optional.</li>
-            <li>Laser or cryotherapy can be used for cosmetic reasons.</li>
-            <li>Monitor for changes in size or color.</li>
+        <ul style='color:#ccc; line-height:1.6;'>
+            <li>Benign; no treatment needed.</li>
+            <li>Cryotherapy or laser optional for cosmetic improvement.</li>
+            <li>Monitor for unusual changes.</li>
         </ul>
         """,
 
         "Dermatofibroma": """
-        <ul>
-            <li>Benign and stable; usually needs no treatment.</li>
-            <li>Minor surgical removal if painful or itchy.</li>
+        <ul style='color:#ccc; line-height:1.6;'>
+            <li>Harmless and stable; no treatment needed.</li>
+            <li>Minor surgery only if painful or irritating.</li>
         </ul>
         """,
 
         "Nevus": """
-        <ul>
-            <li>Benign mole; monitor for shape, size, or color changes.</li>
-            <li>Dermatology checkups once a year recommended.</li>
-            <li>Removal only if irritation or abnormal change is noticed.</li>
+        <ul style='color:#ccc; line-height:1.6;'>
+            <li>Benign mole; monitor size and color over time.</li>
+            <li>Yearly dermatology check-up recommended.</li>
+            <li>Removal only if changing or irritating.</li>
         </ul>
         """
     }
 
-    # ---------------- BUTTON + RESULT ---------------- #
-    st.markdown("<div class='treatment-btn'>", unsafe_allow_html=True)
-
-    show_button = st.button("Show Treatment Plan")
-
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    # Display result
-    if show_button:
+    # Button to show plan
+    if st.button("Show Treatment Plan"):
         st.markdown(f"""
-        <div class='glass-box'>
+        <div class='glass-box' style='padding:25px; margin-top:20px;'>
             <h3 style='color:white;'>Recommended Treatment for {selected_cond}</h3>
             <p style='color:#ccc; font-size:16px;'>{treatment[selected_cond]}</p>
         </div>
@@ -470,13 +425,15 @@ elif st.session_state.page == "Advice":
     st.markdown("<div class='header-card'><h2 style='color:white;'>💡 Doctor's Advice</h2></div>", unsafe_allow_html=True)
 
     st.markdown("""
-    <div class='glass-box' style='padding:25px 30px;'>
-        <h4 style='color:white; margin-bottom:10px;'>💊 Essential Dermatology Care Tips</h4>
-        <p style='color:#ccc; margin-bottom:20px; font-size:17px;'>
-            Follow these dermatologist-approved guidelines to maintain healthy and protected skin:
+    <div class='glass-box' style='padding:35px 40px; border-radius:15px;'>
+
+        <h4 style='color:white; margin-bottom:15px; font-size:22px;'>💊 Essential Dermatology Care Tips</h4>
+
+        <p style='color:#ccc; margin-bottom:25px; font-size:17px; line-height:1.8;'>
+            Follow these dermatologist-approved guidelines to maintain healthy, glowing, and well-protected skin:
         </p>
 
-        <ul style='color:#ccc; line-height:1.9; font-size:17px; padding-left:20px;'>
+        <ul style='color:#ccc; line-height:1.95; font-size:17px; padding-left:28px;'>
             <li>Use a broad-spectrum sunscreen (SPF 30 or higher) every day.</li>
             <li>Reapply sunscreen every 2–3 hours when outdoors.</li>
             <li>Avoid peak sunlight exposure between 11 AM and 4 PM.</li>
@@ -498,6 +455,7 @@ elif st.session_state.page == "Advice":
             <li>Visit a dermatologist once a year for a full skin check.</li>
             <li>Seek medical help if a spot bleeds, grows rapidly, or becomes painful.</li>
         </ul>
+
     </div>
     """, unsafe_allow_html=True)
 
