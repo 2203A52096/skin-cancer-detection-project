@@ -429,25 +429,29 @@ elif st.session_state.page == "Advice":
         unsafe_allow_html=True
     )
 
-    # Advice section with consistent font + smooth UI
     st.markdown(
         """
         <style>
-            /* Make sure all text in the advice box matches Streamlit's global font */
-            .glass-box * {
+            /* Match global font */
+            .advice-box * {
                 font-family: inherit !important;
             }
 
-            /* Optional: make bullet points slightly smoother */
-            .glass-box ul li {
-                margin-bottom: 6px;
+            /* Individual advice item styling */
+            .advice-item {
+                background: rgba(255, 255, 255, 0.06);
+                padding: 12px 18px;
+                margin-bottom: 10px;
+                border-radius: 10px;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                color: #ddd;
+                font-size: 17px;
+                line-height: 1.6;
             }
         </style>
 
-        <div class='glass-box' 
-             style='padding:45px 50px; border-radius:15px; background:rgba(255,255,255,0.05);
-                    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
-                    border:1px solid rgba(255,255,255,0.1);'>
+        <div class='advice-box' 
+             style='padding:45px 50px; border-radius:15px;'>
 
             <h4 style='color:white; margin-bottom:18px; font-size:22px;'>
                 💊 Essential Dermatology Care Tips
@@ -458,28 +462,26 @@ elif st.session_state.page == "Advice":
                 and well-protected skin:
             </p>
 
-            <ul style='color:#ccc; font-size:17px; padding-left:30px; line-height:2.1; margin:0;'>
-                <li>Use a broad-spectrum sunscreen (SPF 30 or higher) every day.</li>
-                <li>Reapply sunscreen every 2–3 hours when outdoors.</li>
-                <li>Avoid peak sunlight exposure between 11 AM and 4 PM.</li>
-                <li>Moisturize twice daily to support the skin barrier.</li>
-                <li>Stay hydrated — drink at least 2–3 liters of water daily.</li>
-                <li>Avoid touching or picking at lesions, rashes, or acne.</li>
-                <li>Use gentle, fragrance-free cleansers to reduce irritation.</li>
-                <li>Exfoliate only 1–2 times per week — excessive scrubbing damages skin.</li>
-                <li>Wear protective clothing, hats, and sunglasses when outside.</li>
-                <li>Monitor moles for changes in symmetry, border, color, or size.</li>
-                <li>Avoid tanning beds — they significantly increase skin cancer risk.</li>
-                <li>Do patch tests before trying new skin care products.</li>
-                <li>Eat antioxidant-rich foods (berries, nuts, green vegetables).</li>
-                <li>Reduce stress — it can trigger acne, eczema, and psoriasis.</li>
-                <li>Sleep at least 7–8 hours daily to support skin recovery.</li>
-                <li>Use retinol or vitamin C serums at night for skin repair (if tolerated).</li>
-                <li>Keep your phone, pillowcase, and makeup brushes clean.</li>
-                <li>Avoid heavy makeup on irritated or inflamed skin.</li>
-                <li>Visit a dermatologist once a year for a full skin check.</li>
-                <li>Seek medical help if a spot bleeds, grows rapidly, or becomes painful.</li>
-            </ul>
+            <div class='advice-item'>Use a broad-spectrum sunscreen (SPF 30 or higher) every day.</div>
+            <div class='advice-item'>Reapply sunscreen every 2–3 hours when outdoors.</div>
+            <div class='advice-item'>Avoid peak sunlight exposure between 11 AM and 4 PM.</div>
+            <div class='advice-item'>Moisturize twice daily to support the skin barrier.</div>
+            <div class='advice-item'>Stay hydrated — drink at least 2–3 liters of water daily.</div>
+            <div class='advice-item'>Avoid touching or picking at lesions, rashes, or acne.</div>
+            <div class='advice-item'>Use gentle, fragrance-free cleansers to reduce irritation.</div>
+            <div class='advice-item'>Exfoliate only 1–2 times per week — excessive scrubbing damages skin.</div>
+            <div class='advice-item'>Wear protective clothing, hats, and sunglasses when outside.</div>
+            <div class='advice-item'>Monitor moles for changes in symmetry, border, color, or size.</div>
+            <div class='advice-item'>Avoid tanning beds — they significantly increase skin cancer risk.</div>
+            <div class='advice-item'>Do patch tests before trying new skin care products.</div>
+            <div class='advice-item'>Eat antioxidant-rich foods (berries, nuts, green vegetables).</div>
+            <div class='advice-item'>Reduce stress — it can trigger acne, eczema, and psoriasis.</div>
+            <div class='advice-item'>Sleep at least 7–8 hours daily to support skin recovery.</div>
+            <div class='advice-item'>Use retinol or vitamin C serums at night for skin repair (if tolerated).</div>
+            <div class='advice-item'>Keep your phone, pillowcase, and makeup brushes clean.</div>
+            <div class='advice-item'>Avoid heavy makeup on irritated or inflamed skin.</div>
+            <div class='advice-item'>Visit a dermatologist once a year for a full skin check.</div>
+            <div class='advice-item'>Seek medical help if a spot bleeds, grows rapidly, or becomes painful.</div>
 
         </div>
         """,
