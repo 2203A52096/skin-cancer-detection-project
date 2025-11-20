@@ -129,34 +129,35 @@ def analyze_image(img):
 # -----------------------------------------
 st.markdown("""
 <style>
-/* Sidebar background */
+/* Sidebar background (same as app background) */
 [data-testid="stSidebar"] {
-    background-color: #0d0f12;
+    background-color: #0d0f12 !important;   /* Main app background */
 }
 
-/* Dark buttons */
+/* Navigation buttons - same color as background */
 [data-testid="stSidebar"] button {
-    background-color: #1b1e24 !important;
+    background-color: #0d0f12 !important;   /* EXACT match */
     color: #ffffff !important;
-    border: 1px solid #333 !important;
+    border: 1px solid #1f2227 !important;
     padding: 10px 18px !important;
     border-radius: 10px !important;
     font-weight: 500 !important;
     margin-bottom: 10px !important;
 }
 
-/* Hover effect */
+/* Hover effect - slightly lighter */
 [data-testid="stSidebar"] button:hover {
-    background-color: #272b33 !important;
-    border-color: #444 !important;
+    background-color: #15171d !important;
+    border-color: #2a2e33 !important;
 }
 
-/* Active (clicked) effect */
+/* Active effect */
 [data-testid="stSidebar"] button:active {
-    background-color: #3a3f48 !important;
+    background-color: #1c1f25 !important;
 }
 </style>
 """, unsafe_allow_html=True)
+
 
 st.sidebar.title("🧭 Navigation")
 
