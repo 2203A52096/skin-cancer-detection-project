@@ -421,15 +421,20 @@ elif st.session_state.page == "Treatment":
 # -----------------------------------------
 # DOCTOR ADVICE PAGE
 # -----------------------------------------
-elif st.session_state.page == "Advice":
+
+if 'page' not in st.session_state:
+    st.session_state.page = "Advice"
+
+if st.session_state.page == "Advice":
 
     # ---------- PAGE HEADER ---------- #
     st.markdown("""
     <div style="
-        background: rgba(255,255,255,0.1);  /* light transparent background */
+        background: rgba(255,255,255,0.08); 
         padding:20px 25px; 
         border-radius:15px; 
         margin-bottom:20px;
+        border: 1px solid rgba(255,255,255,0.1);
     ">
         <h2 style='color:white; margin:0; font-size:28px; font-weight:600;'>
             💡 Doctor's Advice
@@ -437,19 +442,18 @@ elif st.session_state.page == "Advice":
     </div>
     """, unsafe_allow_html=True)
 
-    # ---------- MAIN TITLE & DESCRIPTION ---------- #
+    # ---------- TITLE & DESCRIPTION ---------- #
     st.markdown("""
     <div style="
-        background: rgba(255,255,255,0.05);  /* light transparent, not black */
+        background: rgba(255,255,255,0.05); 
         padding:20px 25px; 
         border-radius:15px; 
         margin-bottom:20px;
-        border: 1px solid rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.08);
     ">
         <h4 style='color:white; margin-bottom:12px; font-size:22px; font-weight:600;'>
             💊 Essential Dermatology Care Tips
         </h4>
-
         <p style='color:#e0e0e0; font-size:16px; line-height:1.8; margin:0;'>
             Follow these dermatologist-approved guidelines to maintain healthy, glowing, and well-protected skin. These tips support your skin barrier, prevent damage, and promote long-term skin wellness.
         </p>
@@ -480,19 +484,22 @@ elif st.session_state.page == "Advice":
         "Seek medical help if a spot bleeds, grows rapidly, or becomes painful."
     ]
 
-    # ---------- DISPLAY EACH TIP IN SEPARATE CARD ---------- #
-    for tip in advice_list:
+    # ---------- DISPLAY EACH TIP WITH EMOJI NUMBER ---------- #
+    emoji_numbers = ["1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟",
+                     "1️⃣1️⃣","1️⃣2️⃣","1️⃣3️⃣","1️⃣4️⃣","1️⃣5️⃣","1️⃣6️⃣","1️⃣7️⃣","1️⃣8️⃣","1️⃣9️⃣","2️⃣0️⃣"]
+
+    for i, tip in enumerate(advice_list):
         st.markdown(
             f"""
             <div style="
-                background: rgba(255,255,255,0.05);  /* light transparent */
+                background: rgba(255,255,255,0.05); 
                 padding:15px 18px; 
                 border-radius:12px; 
                 margin-bottom:12px;
                 border: 1px solid rgba(255,255,255,0.08);
             ">
                 <p style="color:#ddd; font-size:16px; margin:0; line-height:1.6;">
-                    {tip}
+                    {emoji_numbers[i]} {tip}
                 </p>
             </div>
             """, unsafe_allow_html=True
