@@ -130,29 +130,34 @@ def analyze_image(img):
 st.markdown("""
 <style>
 
-/* Navigation buttons - same color as background */
+/* Navigation buttons - gradient */
 [data-testid="stSidebar"] button {
-    background-color: #0d0f12 !important;   /* EXACT match */
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e) !important;
     color: #ffffff !important;
-    border: 1px solid #1f2227 !important;
+    border: none !important;
     padding: 10px 18px !important;
-    border-radius: 10px !important;
+    border-radius: 12px !important;
     font-weight: 500 !important;
     margin-bottom: 10px !important;
+    box-shadow: 0 0 10px rgba(32, 32, 60, 0.5) !important;
+    transition: all 0.2s ease-in-out !important;
 }
 
-/* Hover effect - slightly lighter */
+/* Hover effect - brighter gradient */
 [data-testid="stSidebar"] button:hover {
-    background-color: #15171d !important;
-    border-color: #2a2e33 !important;
+    background: linear-gradient(135deg, #1a173d, #3e3980, #2f3054) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 0 15px rgba(70, 70, 120, 0.7) !important;
 }
 
-/* Active effect */
+/* Active effect - pressed */
 [data-testid="stSidebar"] button:active {
-    background-color: #1c1f25 !important;
+    transform: scale(0.97) !important;
+    background: linear-gradient(135deg, #0d0b20, #26224e, #1e1e35) !important;
 }
 </style>
 """, unsafe_allow_html=True)
+
 
 
 st.sidebar.title("🧭 Navigation")
