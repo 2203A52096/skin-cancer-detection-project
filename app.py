@@ -422,71 +422,64 @@ elif st.session_state.page == "Treatment":
 # DOCTOR ADVICE PAGE
 # -----------------------------------------
 elif st.session_state.page == "Advice":
+    st.markdown("<div class='header-card'><h2 style='color:white;'>💡 Doctor's Advice</h2></div>", unsafe_allow_html=True)
 
-    # Header
-    st.markdown(
-        "<div class='header-card'><h2 style='color:white;'>💡 Doctor's Advice</h2></div>",
-        unsafe_allow_html=True
-    )
+    st.markdown("""
+    <div class='glass-box' 
+         style='padding:35px 40px; border-radius:15px;'>
 
-    st.markdown(
-        """
-        <style>
-            /* Match global font */
-            .advice-box * {
-                font-family: inherit !important;
-            }
+        <h4 style='color:white; margin-bottom:18px; font-size:22px;'>
+            💊 Essential Dermatology Care Tips
+        </h4>
 
-            /* Individual advice item styling */
-            .advice-item {
-                background: rgba(255, 255, 255, 0.06);
-                padding: 12px 18px;
-                margin-bottom: 10px;
-                border-radius: 10px;
-                border: 1px solid rgba(255, 255, 255, 0.15);
-                color: #ddd;
-                font-size: 17px;
-                line-height: 1.6;
-            }
-        </style>
+        <p style='color:#ccc; margin-bottom:20px; font-size:17px; line-height:1.8;'>
+            Follow these dermatologist-approved guidelines to maintain healthy, glowing,
+            and well-protected skin:
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
-        <div class='advice-box' 
-             style='padding:45px 50px; border-radius:15px;'>
+    # --- List of Advice Items --- #
+    advice_list = [
+        "Use a broad-spectrum sunscreen (SPF 30 or higher) every day.",
+        "Reapply sunscreen every 2–3 hours when outdoors.",
+        "Avoid peak sunlight exposure between 11 AM and 4 PM.",
+        "Moisturize twice daily to support the skin barrier.",
+        "Stay hydrated — drink at least 2–3 liters of water daily.",
+        "Avoid touching or picking at lesions, rashes, or acne.",
+        "Use gentle, fragrance-free cleansers to reduce irritation.",
+        "Exfoliate only 1–2 times per week — excessive scrubbing damages skin.",
+        "Wear protective clothing, hats, and sunglasses when outside.",
+        "Monitor moles for changes in symmetry, border, color, or size.",
+        "Avoid tanning beds — they significantly increase skin cancer risk.",
+        "Do patch tests before trying new skin care products.",
+        "Eat antioxidant-rich foods (berries, nuts, green vegetables).",
+        "Reduce stress — it can trigger acne, eczema, and psoriasis.",
+        "Sleep at least 7–8 hours daily to support skin recovery.",
+        "Use retinol or vitamin C serums at night for skin repair (if tolerated).",
+        "Keep your phone, pillowcase, and makeup brushes clean.",
+        "Avoid heavy makeup on irritated or inflamed skin.",
+        "Visit a dermatologist once a year for a full skin check.",
+        "Seek medical help if a spot bleeds, grows rapidly, or becomes painful."
+    ]
 
-            <h4 style='color:white; margin-bottom:18px; font-size:22px;'>
-                💊 Essential Dermatology Care Tips
-            </h4>
-
-            <p style='color:#ccc; margin-bottom:25px; font-size:17px; line-height:1.9;'>
-                Follow these dermatologist-approved guidelines to maintain healthy, glowing,
-                and well-protected skin:
-            </p>
-
-            <div class='advice-item'>Use a broad-spectrum sunscreen (SPF 30 or higher) every day.</div>
-            <div class='advice-item'>Reapply sunscreen every 2–3 hours when outdoors.</div>
-            <div class='advice-item'>Avoid peak sunlight exposure between 11 AM and 4 PM.</div>
-            <div class='advice-item'>Moisturize twice daily to support the skin barrier.</div>
-            <div class='advice-item'>Stay hydrated — drink at least 2–3 liters of water daily.</div>
-            <div class='advice-item'>Avoid touching or picking at lesions, rashes, or acne.</div>
-            <div class='advice-item'>Use gentle, fragrance-free cleansers to reduce irritation.</div>
-            <div class='advice-item'>Exfoliate only 1–2 times per week — excessive scrubbing damages skin.</div>
-            <div class='advice-item'>Wear protective clothing, hats, and sunglasses when outside.</div>
-            <div class='advice-item'>Monitor moles for changes in symmetry, border, color, or size.</div>
-            <div class='advice-item'>Avoid tanning beds — they significantly increase skin cancer risk.</div>
-            <div class='advice-item'>Do patch tests before trying new skin care products.</div>
-            <div class='advice-item'>Eat antioxidant-rich foods (berries, nuts, green vegetables).</div>
-            <div class='advice-item'>Reduce stress — it can trigger acne, eczema, and psoriasis.</div>
-            <div class='advice-item'>Sleep at least 7–8 hours daily to support skin recovery.</div>
-            <div class='advice-item'>Use retinol or vitamin C serums at night for skin repair (if tolerated).</div>
-            <div class='advice-item'>Keep your phone, pillowcase, and makeup brushes clean.</div>
-            <div class='advice-item'>Avoid heavy makeup on irritated or inflamed skin.</div>
-            <div class='advice-item'>Visit a dermatologist once a year for a full skin check.</div>
-            <div class='advice-item'>Seek medical help if a spot bleeds, grows rapidly, or becomes painful.</div>
-
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    # --- Display Each Advice in Separate Box --- #
+    for tip in advice_list:
+        st.markdown(
+            f"""
+            <div style="
+                background: rgba(255,255,255,0.07); 
+                padding:15px 18px; 
+                border-radius:12px; 
+                margin-bottom:12px;
+                border: 1px solid rgba(255,255,255,0.12);
+            ">
+                <p style="color:#ddd; font-size:16px; margin:0; line-height:1.7;">
+                    {tip}
+                </p>
+            </div>
+            """, unsafe_allow_html=True
+        )
 
 # -----------------------------------------
 # ABOUT PAGE
