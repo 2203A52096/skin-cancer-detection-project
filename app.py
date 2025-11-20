@@ -546,18 +546,7 @@ if st.session_state.page == "About":
             "title": "❗ Problem Statement",
             "content": "Many individuals delay seeking medical help for skin abnormalities due to lack of awareness, hesitation, or not knowing whether a spot or lesion is concerning. This delay can lead to late detection of serious conditions."
         },
-        {
-            "title": "💡 What This App Does",
-            "content": """
-                <div style='padding-left:10px;'>
-                    <div style='margin-bottom:8px;'>1️⃣ Analyzes the uploaded skin image based on texture, color, and intensity patterns.</div>
-                    <div style='margin-bottom:8px;'>2️⃣ Provides possible skin condition identification.</div>
-                    <div style='margin-bottom:8px;'>3️⃣ Offers treatment guidance based on selected condition.</div>
-                    <div style='margin-bottom:8px;'>4️⃣ Provides dermatologist-style general advice for daily skin care.</div>
-                    <div>5️⃣ Helps users stay informed and aware of their skin health.</div>
-                </div>
-            """
-        },
+
         {
             "title": "🧑‍⚕️ Why This Matters",
             "content": "Early awareness is key in preventing severe outcomes in many skin conditions. This app encourages proactive skin monitoring and helps users understand when they should seek professional medical evaluation."
