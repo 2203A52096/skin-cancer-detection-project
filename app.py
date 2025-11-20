@@ -508,6 +508,8 @@ if st.session_state.page == "Advice":
 # -----------------------------------------
 # ABOUT PAGE
 # -----------------------------------------
+import streamlit as st
+
 if 'page' not in st.session_state:
     st.session_state.page = "About"
 
@@ -529,6 +531,8 @@ if st.session_state.page == "About":
     """, unsafe_allow_html=True)
 
     # ---------- SECTIONS ---------- #
+    # Each section will be displayed in a card
+    # For "What This App Does" we add emoji numbers
     sections = [
         {
             "title": "🌟 Mission",
@@ -545,13 +549,13 @@ if st.session_state.page == "About":
         {
             "title": "💡 What This App Does",
             "content": """
-                <ul style='color:#ccc; line-height:1.8; font-size:16px; padding-left:25px; margin:0;'>
-                    <li style='margin-bottom:8px;'>1️⃣ Analyzes the uploaded skin image based on texture, color, and intensity patterns.</li>
-                    <li style='margin-bottom:8px;'>2️⃣ Provides possible skin condition identification.</li>
-                    <li style='margin-bottom:8px;'>3️⃣ Offers treatment guidance based on selected condition.</li>
-                    <li style='margin-bottom:8px;'>4️⃣ Provides dermatologist-style general advice for daily skin care.</li>
-                    <li>5️⃣ Helps users stay informed and aware of their skin health.</li>
-                </ul>
+                <div style='padding-left:10px;'>
+                    <div style='margin-bottom:8px;'>1️⃣ Analyzes the uploaded skin image based on texture, color, and intensity patterns.</div>
+                    <div style='margin-bottom:8px;'>2️⃣ Provides possible skin condition identification.</div>
+                    <div style='margin-bottom:8px;'>3️⃣ Offers treatment guidance based on selected condition.</div>
+                    <div style='margin-bottom:8px;'>4️⃣ Provides dermatologist-style general advice for daily skin care.</div>
+                    <div>5️⃣ Helps users stay informed and aware of their skin health.</div>
+                </div>
             """
         },
         {
@@ -580,6 +584,7 @@ if st.session_state.page == "About":
             </div>
         </div>
         """, unsafe_allow_html=True)
+
 
 # -----------------------------------------
 # FOOTER
