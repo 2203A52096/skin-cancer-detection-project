@@ -427,7 +427,7 @@ elif st.session_state.page == "Advice":
     # ---------- HEADER CONTENT ---------- #
     st.markdown("""
     <div class='glass-box' 
-         style='padding:35px 40px; border-radius:15px; margin-bottom:20px;'>
+         style='padding:45px 60px; border-radius:15px; margin-bottom:20px;'>
 
         <h4 style='color:white; margin-bottom:16px; font-size:24px; font-weight:600;'>
             💊 Essential Dermatology Care Tips
