@@ -303,18 +303,23 @@ elif st.session_state.page == "Upload":
 # TREATMENT PAGE
 # -----------------------------------------
 elif st.session_state.page == "Treatment":
-    st.markdown("<div class='header-card'><h2 style='color:white;'>🩺 Treatment Plan</h2></div>", unsafe_allow_html=True)
 
     st.markdown("""
-    <div class='glass-box'>
+    <div class='header-card' style='margin-bottom:25px;'>
+        <h2 style='color:white;'>🩺 Treatment Plan</h2>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class='glass-box' style='padding:20px; margin-bottom:20px;'>
         <p style='color:#ccc; font-size:16px;'>
-            Select the diagnosed or predicted skin condition below to view recommended
+            Select the predicted or known skin condition to view recommended
             treatment options and medical guidance.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
-    # 🔽 Dropdown List of All Skin Conditions
+    # Dropdown list
     condition_list = [
         "Melanoma",
         "Vascular Lesion",
@@ -329,85 +334,85 @@ elif st.session_state.page == "Treatment":
 
     selected_cond = st.selectbox("Select Skin Condition:", condition_list)
 
-    # Treatment Plans Dictionary
+    # Treatment dictionary (with color styling fixed)
     treatment = {
         "Melanoma": """
-        <ul>
+        <ul style='color:#ccc; line-height:1.6;'>
             <li>Immediate dermatology consultation is recommended.</li>
-            <li>Surgical removal of the lesion at the earliest.</li>
-            <li>Possible lymph node evaluation depending on depth.</li>
+            <li>Surgical removal of the lesion as early as possible.</li>
+            <li>Lymph node evaluation depending on melanoma depth.</li>
             <li>Regular follow-up every 3–6 months.</li>
         </ul>
         """,
 
         "Vascular Lesion": """
-        <ul>
-            <li>Laser treatment is highly effective.</li>
-            <li>Topical anti-redness creams may reduce irritation.</li>
-            <li>Cold compress can help minimize swelling.</li>
+        <ul style='color:#ccc; line-height:1.6;'>
+            <li>Laser treatment is the most effective option.</li>
+            <li>Anti-redness topical creams can reduce irritation.</li>
+            <li>Cold compress may help with swelling.</li>
         </ul>
         """,
 
         "Actinic Keratosis": """
-        <ul>
-            <li>Cryotherapy (freezing the lesion) is common.</li>
+        <ul style='color:#ccc; line-height:1.6;'>
+            <li>Cryotherapy (freezing the lesion).</li>
             <li>Topical medications like 5-FU or imiquimod.</li>
-            <li>Strict sun protection and SPF 50+ sunscreen daily.</li>
+            <li>Daily use of SPF 50+ sunscreen.</li>
         </ul>
         """,
 
         "Squamous Cell Carcinoma": """
-        <ul>
-            <li>Surgical excision is the primary treatment.</li>
-            <li>Mohs surgery for sensitive areas like the face.</li>
+        <ul style='color:#ccc; line-height:1.6;'>
+            <li>Surgical removal is the primary treatment.</li>
+            <li>Mohs surgery for sensitive or facial areas.</li>
             <li>Follow-up every 3–6 months is recommended.</li>
         </ul>
         """,
 
         "Basal Cell Carcinoma": """
-        <ul>
-            <li>Outpatient surgical removal.</li>
-            <li>Topical treatments for superficial types.</li>
-            <li>Radiotherapy for large or difficult areas.</li>
+        <ul style='color:#ccc; line-height:1.6;'>
+            <li>Outpatient surgical excision.</li>
+            <li>Topical therapy for superficial types.</li>
+            <li>Radiation therapy for large or difficult areas.</li>
         </ul>
         """,
 
         "Seborrheic Keratosis": """
-        <ul>
-            <li>Usually harmless; treatment is optional.</li>
-            <li>Cryotherapy or laser removal for cosmetic concerns.</li>
+        <ul style='color:#ccc; line-height:1.6;'>
+            <li>Harmless; treatment optional.</li>
+            <li>Cryotherapy or laser removal for cosmetic reasons.</li>
             <li>Avoid scratching or picking.</li>
         </ul>
         """,
 
         "Pigmented Benign Keratosis": """
-        <ul>
-            <li>Generally harmless; no treatment required.</li>
-            <li>Laser or cryotherapy optional for appearance.</li>
-            <li>Monitor for sudden changes.</li>
+        <ul style='color:#ccc; line-height:1.6;'>
+            <li>Benign; no treatment needed.</li>
+            <li>Cryotherapy or laser optional for cosmetic improvement.</li>
+            <li>Monitor for unusual changes.</li>
         </ul>
         """,
 
         "Dermatofibroma": """
-        <ul>
-            <li>Benign and stable; treatment not required.</li>
-            <li>Minor surgery optional if painful or irritating.</li>
+        <ul style='color:#ccc; line-height:1.6;'>
+            <li>Harmless and stable; no treatment needed.</li>
+            <li>Minor surgery only if painful or irritating.</li>
         </ul>
         """,
 
         "Nevus": """
-        <ul>
-            <li>Benign mole; record size and monitor changes.</li>
-            <li>Dermatology check-up every year recommended.</li>
-            <li>Removal only if irregularity or irritation develops.</li>
+        <ul style='color:#ccc; line-height:1.6;'>
+            <li>Benign mole; monitor size and color over time.</li>
+            <li>Yearly dermatology check-up recommended.</li>
+            <li>Removal only if changing or irritating.</li>
         </ul>
         """
     }
 
-    # 🔘 Button to Show Treatment Plan
+    # Button to show plan
     if st.button("Show Treatment Plan"):
         st.markdown(f"""
-        <div class='glass-box'>
+        <div class='glass-box' style='padding:25px; margin-top:20px;'>
             <h3 style='color:white;'>Recommended Treatment for {selected_cond}</h3>
             <p style='color:#ccc; font-size:16px;'>{treatment[selected_cond]}</p>
         </div>
