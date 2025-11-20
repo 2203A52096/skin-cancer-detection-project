@@ -129,10 +129,6 @@ def analyze_image(img):
 # -----------------------------------------
 st.markdown("""
 <style>
-/* Sidebar background (same as app background) */
-[data-testid="stSidebar"] {
-    background-color: #0d0f12 !important;   /* Main app background */
-}
 
 /* Navigation buttons - same color as background */
 [data-testid="stSidebar"] button {
