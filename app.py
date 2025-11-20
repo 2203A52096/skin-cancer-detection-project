@@ -508,8 +508,6 @@ if st.session_state.page == "Advice":
 # -----------------------------------------
 # ABOUT PAGE
 # -----------------------------------------
-import streamlit as st
-
 if 'page' not in st.session_state:
     st.session_state.page = "About"
 
@@ -519,7 +517,7 @@ if st.session_state.page == "About":
     st.markdown("""
     <div style="
         background: rgba(255,255,255,0.08);
-        padding:25px 30px;  /* Header padding */
+        padding:25px 30px;
         border-radius:15px;
         margin-bottom:20px;
         border: 1px solid rgba(255,255,255,0.1);
@@ -548,11 +546,11 @@ if st.session_state.page == "About":
             "title": "💡 What This App Does",
             "content": """
                 <ul style='color:#ccc; line-height:1.8; font-size:16px; padding-left:25px; margin:0;'>
-                    <li style='margin-bottom:8px;'>Analyzes the uploaded skin image based on texture, color, and intensity patterns.</li>
-                    <li style='margin-bottom:8px;'>Provides possible skin condition identification.</li>
-                    <li style='margin-bottom:8px;'>Offers treatment guidance based on selected condition.</li>
-                    <li style='margin-bottom:8px;'>Provides dermatologist-style general advice for daily skin care.</li>
-                    <li>Helps users stay informed and aware of their skin health.</li>
+                    <li style='margin-bottom:8px;'>1️⃣ Analyzes the uploaded skin image based on texture, color, and intensity patterns.</li>
+                    <li style='margin-bottom:8px;'>2️⃣ Provides possible skin condition identification.</li>
+                    <li style='margin-bottom:8px;'>3️⃣ Offers treatment guidance based on selected condition.</li>
+                    <li style='margin-bottom:8px;'>4️⃣ Provides dermatologist-style general advice for daily skin care.</li>
+                    <li>5️⃣ Helps users stay informed and aware of their skin health.</li>
                 </ul>
             """
         },
@@ -571,7 +569,7 @@ if st.session_state.page == "About":
         st.markdown(f"""
         <div style="
             background: rgba(255,255,255,0.05);
-            padding:20px 25px;  /* Section card padding */
+            padding:20px 25px;
             border-radius:12px;
             margin-bottom:15px;
             border: 1px solid rgba(255,255,255,0.08);
@@ -582,7 +580,6 @@ if st.session_state.page == "About":
             </div>
         </div>
         """, unsafe_allow_html=True)
-
 
 # -----------------------------------------
 # FOOTER
