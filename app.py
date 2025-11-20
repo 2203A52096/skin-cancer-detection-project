@@ -78,21 +78,11 @@ div[data-testid="stForm"] button {
 
 # ---------------- LOAD MODEL ----------------
 @st.cache_resource
-def load_model():
-    model_path = "skincancercnn.h5"
-    if not os.path.exists(model_path):
-        # return None but also show the info (outside function we'll show a message too)
-        return None
-    try:
-        # compile=False is fine if you only predict
-        model = tf.keras.models.load_model(model_path, compile=False)
-        return model
-    except Exception as e:
-        # return None and log the exception to Streamlit
-        st.error(f"⚠️ Error loading model: {e}")
-        return None
 
-model = load_model()
+from tensorflow.keras.models import load_model
+
+model=load_model("skincancercnn.h5")
+
 if model is None:
     st.warning("❌ Model file not found or failed to load. Place 'skincancercnn.h5' in the app folder.", icon="⚠️")
 
