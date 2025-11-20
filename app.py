@@ -1,242 +1,292 @@
 import streamlit as st
-from PIL import Image
+from PIL import Image, ImageFilter
+import numpy as np
 
-# ---------------------- PAGE CONFIG ----------------------
+# ---------------------------------------------------------
+# PAGE CONFIG
+# ---------------------------------------------------------
 st.set_page_config(
-    page_title="Skin Cancer Guide",
+    page_title="Skin Health AI",
     layout="wide",
     page_icon="🩺"
 )
 
-# ---------------------- SIDEBAR DARK MODE TOGGLE ----------------------
-st.sidebar.markdown("## 🌓 Theme")
-dark_mode = st.sidebar.checkbox("Enable Dark Mode")
+# ---------------------------------------------------------
+# GLOBAL DARK UI CSS (Glassmorphism + Gradient)
+# ---------------------------------------------------------
+st.markdown("""
+<style>
 
-# ---------------------- THEME CSS ----------------------
-if dark_mode:
-    # 🌙 DARK MODE CSS
-    st.markdown("""
-    <style>
-    body { background-color: #0E1117; }
-    .main-title { color: #FF5F5F; }
-    .sub-title { color: #CCCCCC; }
-    .info-card, .result-box, .upload-box {
-        background: #1E1E1E !important;
-        color: white !important;
-        border: 1px solid #444;
-    }
-    .menu-box { background: #1E1E1E; color: white; border:1px solid #444; }
-    .menu-box:hover { background: #292929; border-color: #FF5F5F; }
-    </style>
-    """, unsafe_allow_html=True)
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-else:
-    # ☀️ LIGHT MODE CSS
-    st.markdown("""
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-
-    body {
-        font-family: 'Poppins', sans-serif;
-        background: #FAFAFA;
-    }
-    .main-title {
-        font-size: 42px;
-        font-weight: 700;
-        text-align: center;
-        color: #ff4b4b;
-        margin-bottom: 10px;
-    }
-
-    .sub-title {
-        font-size: 20px;
-        font-weight: 400;
-        text-align: center;
-        margin-bottom: 30px;
-        color: #444444;
-    }
-
-    .menu-box {
-        background: white;
-        padding: 18px;
-        border-radius: 18px;
-        margin-bottom: 10px;
-        font-size: 17px;
-        border: 1px solid #e6e6e6;
-        transition: all 0.2s;
-    }
-    .menu-box:hover {
-        background: #ffecec;
-        border-color: #ff6b6b;
-    }
-
-    .upload-box {
-        background: #ffffff;
-        padding: 30px;
-        border-radius: 20px;
-        border: 2px dashed #ff6b6b;
-        text-align: center;
-    }
-
-    .result-box {
-        background: #fff5f5;
-        padding: 25px;
-        border-radius: 20px;
-        border-left: 6px solid #ff4b4b;
-        margin-top: 25px;
-    }
-
-    .info-card {
-        background: #ffffff;
-        padding: 25px;
-        border-radius: 20px;
-        border: 1px solid #dddddd;
-        margin-bottom: 20px;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-# ---------------------- RULE-BASED PREDICTOR ----------------------
-SKIN_CLASSES = {
-    0: "Pigmented Benign Keratosis",
-    1: "Melanoma",
-    2: "Vascular Lesion",
-    3: "Actinic Keratosis",
-    4: "Squamous Cell Carcinoma",
-    5: "Basal Cell Carcinoma",
-    6: "Seborrheic Keratosis",
-    7: "Dermatofibroma",
-    8: "Nevus"
+html, body, [class*="css"] {
+    font-family: 'Poppins', sans-serif;
 }
 
-def simple_rule_predict(image):
-    img = image.convert("RGB")
-    pixels = img.getdata()
+.stApp {
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+}
 
-    r = sum([p[0] for p in pixels]) / len(pixels)
-    g = sum([p[1] for p in pixels]) / len(pixels)
-    b = sum([p[2] for p in pixels]) / len(pixels)
 
-    if r > g and r > b:
-        return SKIN_CLASSES[1]      # Melanoma
-    elif b > r and b > g:
-        return SKIN_CLASSES[2]      # Vascular Lesion
-    elif g > r and g > b:
-        return SKIN_CLASSES[8]      # Nevus
-    else:
-        return SKIN_CLASSES[5]      # Basal Cell Carcinoma
+/* HEADER CARD */
+.header-card {
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 25px 20px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 4px 25px rgba(0,0,0,0.35);
+    margin-bottom: 25px;
+}
 
-# ---------------------- SIDEBAR NAVIGATION ----------------------
-page = st.sidebar.radio(
-    "📌 Navigate",
-    [
-        "🏠 Home",
-        "📤 Upload & Predict",
-        "💊 Treatment Plan",
-        "👨‍⚕️ Doctor’s Advice",
-        "ℹ️ About"
-    ]
-)
 
-# ---------------------- HOME PAGE ----------------------
-if page == "🏠 Home":
-    st.markdown("<div class='main-title'>🩺 Skin Cancer Companion</div>", unsafe_allow_html=True)
-    st.markdown("<div class='sub-title'>Your friendly assistant to understand skin conditions.</div>", unsafe_allow_html=True)
+/* GLASS BOXES */
+.glass-box {
+    backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.06);
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: 0.3s;
+}
+
+.glass-box:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-5px);
+}
+
+
+/* NAV BUTTONS */
+.nav-btn {
+    display:inline-block;
+    padding:12px 18px;
+    margin: 8px 6px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#6a11cb,#2575fc);
+    color:white !important;
+    transition:0.25s;
+    text-decoration:none;
+    font-size:15px;
+}
+
+.nav-btn:hover {
+    box-shadow:0 0 12px #2575fc;
+    transform:scale(1.06);
+}
+
+
+/* RESULT LABEL */
+.result-label {
+    background: linear-gradient(135deg,#ff512f,#dd2476);
+    padding: 14px;
+    border-radius: 12px;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+}
+
+
+/* FOOTER */
+.footer {
+    margin-top: 50px;
+    padding: 10px;
+    text-align:center;
+    color:#ddd;
+    font-size:14px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+# ---------------------------------------------------------
+# AI-LIKE Image Analyzer (NO ML Model)
+# ---------------------------------------------------------
+def analyze_image(img):
+    img_resized = img.resize((256, 256))
+    arr = np.array(img_resized)
+
+    gray = np.mean(arr, axis=2)
+    darkness = gray.mean()
+
+    r, g, b = arr[:,:,0], arr[:,:,1], arr[:,:,2]
+    redness = np.mean(r - g)
+
+    texture_img = img_resized.filter(ImageFilter.FIND_EDGES)
+    texture = np.array(texture_img).var()
+
+    edges = np.array(texture_img).mean() / 255
+
+    center = gray[100:150, 100:150].mean()
+    edge_illum = (gray[0:50].mean() + gray[-50:].mean()) / 2
+
+    if darkness < 90 and texture > 35000:
+        return "Melanoma"
+    if redness > 25:
+        return "Vascular Lesion"
+    if texture > 30000 and darkness > 140:
+        return "Actinic Keratosis"
+    if texture > 28000 and edges > 0.35:
+        return "Squamous Cell Carcinoma"
+    if center > edge_illum + 20:
+        return "Basal Cell Carcinoma"
+    if texture > 26000 and darkness < 140:
+        return "Seborrheic Keratosis"
+    if 100 < darkness < 170 and texture < 20000:
+        return "Pigmented Benign Keratosis"
+    if edges < 0.20 and 130 < darkness < 200:
+        return "Dermatofibroma"
+    if 80 < darkness < 130:
+        return "Nevus"
+
+    return "Nevus"
+
+# ---------------------------------------------------------
+# NAVIGATION MENU (TOP BUTTONS)
+# ---------------------------------------------------------
+st.markdown("""
+<div style="text-align:center;">
+    <a class="nav-btn" href="?page=Home">🏠 Home</a>
+    <a class="nav-btn" href="?page=Upload">📤 Upload & Predict</a>
+    <a class="nav-btn" href="?page=Treatment">💊 Treatment Plan</a>
+    <a class="nav-btn" href="?page=Advice">👨‍⚕️ Doctor’s Advice</a>
+    <a class="nav-btn" href="?page=About">ℹ️ About</a>
+</div>
+""", unsafe_allow_html=True)
+
+page = st.experimental_get_query_params().get("page", ["Home"])[0]
+
+# ---------------------------------------------------------
+# HOME PAGE
+# ---------------------------------------------------------
+if page == "Home":
+    st.markdown("""
+    <div class='header-card'>
+        <h1 style='color:white; text-align:center;'>🩺 Skin Health AI</h1>
+        <p style='color:#ddd; text-align:center;'>
+            Your stylish skin wellness companion.<br>
+            Analyze, understand and explore your skin health.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
     col1, col2 = st.columns(2)
 
     with col1:
         st.markdown("""
-        <div class="info-card">
-            <h3>🌟 What This App Offers</h3>
-            <p>This guide helps you understand skin cancer types and next steps.</p>
-            <ul>
-                <li>Upload & analyze skin images</li>
-                <li>Instant classification</li>
-                <li>Treatment suggestions</li>
-                <li>Doctor-style advice</li>
-            </ul>
+        <div class='glass-box'>
+        <h3 style='color:white;'>📤 Upload & Predict</h3>
+        <p style='color:#ccc;'>Upload your skin lesion image and get an instant prediction.</p>
         </div>
         """, unsafe_allow_html=True)
 
     with col2:
-        st.image("https://i.imgur.com/oYiTqum.png", use_container_width=True)
-
-# ---------------------- UPLOAD PAGE ----------------------
-elif page == "📤 Upload & Predict":
-    st.markdown("<div class='main-title'>📤 Upload & Predict</div>", unsafe_allow_html=True)
-
-    uploaded_file = st.file_uploader("Upload a skin lesion image", type=["jpg", "jpeg", "png"])
-
-    if uploaded_file:
-        img = Image.open(uploaded_file)
-
-        st.markdown("### 🖼 Uploaded Image:")
-        st.image(img, width=350)
-
-        predicted = simple_rule_predict(img)
-
-        st.markdown(f"""
-        <div class='result-box'>
-            <h3>🔍 Predicted Skin Cancer Type:</h3>
-            <h2 style='color:#ff4b4b'>{predicted}</h2>
+        st.markdown("""
+        <div class='glass-box'>
+        <h3 style='color:white;'>💊 Treatment Guidance</h3>
+        <p style='color:#ccc;'>Learn recommended treatment paths for each condition.</p>
         </div>
         """, unsafe_allow_html=True)
 
-# ---------------------- TREATMENT PLAN ----------------------
-elif page == "💊 Treatment Plan":
-    st.markdown("<div class='main-title'>💊 Treatment Plans</div>", unsafe_allow_html=True)
+# ---------------------------------------------------------
+# UPLOAD & PREDICT PAGE
+# ---------------------------------------------------------
+elif page == "Upload":
+    st.markdown(
+        "<div class='header-card'><h2 style='color:white;'>📤 Upload & Predict</h2></div>",
+        unsafe_allow_html=True
+    )
 
-    choice = st.selectbox("Choose a skin cancer type", list(SKIN_CLASSES.values()))
+    uploaded = st.file_uploader("Upload your skin image", type=["jpg", "jpeg", "png"])
 
-    treatment = {
+    if uploaded:
+        img = Image.open(uploaded).convert("RGB")
+        st.image(img, width=350)
+
+        with st.spinner("Analyzing image..."):
+            result = analyze_image(img)
+
+        st.session_state["result"] = result
+
+        st.markdown(f"<div class='result-label'>Predicted Condition: {result}</div>",
+                    unsafe_allow_html=True)
+
+# ---------------------------------------------------------
+# TREATMENT PLAN PAGE
+# ---------------------------------------------------------
+elif page == "Treatment":
+    st.markdown(
+        "<div class='header-card'><h2 style='color:white;'>💊 Treatment Plan</h2></div>",
+        unsafe_allow_html=True
+    )
+
+    treatments = {
         "Melanoma": "Surgery, immunotherapy, targeted therapy.",
-        "Basal Cell Carcinoma": "Excision, cryotherapy, topical chemotherapy.",
+        "Vascular Lesion": "Laser therapy or light-based treatment.",
+        "Actinic Keratosis": "Cryotherapy and topical medications.",
         "Squamous Cell Carcinoma": "Surgery, radiation therapy.",
-        "Nevus": "Usually harmless; monitor or remove.",
-        "Pigmented Benign Keratosis": "Cryotherapy or surface removal.",
-        "Seborrheic Keratosis": "Laser therapy, freezing.",
-        "Vascular Lesion": "Laser treatment.",
-        "Actinic Keratosis": "Cryotherapy and topical drugs.",
-        "Dermatofibroma": "Harmless; remove if painful."
+        "Basal Cell Carcinoma": "Excision, freezing, topical chemo.",
+        "Seborrheic Keratosis": "Laser or cryotherapy if removal needed.",
+        "Pigmented Benign Keratosis": "Usually harmless; surface removal possible.",
+        "Dermatofibroma": "Harmless; remove only if discomfort.",
+        "Nevus": "Monitor or remove based on doctor’s suggestion."
     }
 
+    choice = st.selectbox("Select a condition", list(treatments.keys()))
+
     st.markdown(f"""
-    <div class='info-card'>
-        <h3>💡 Treatment for {choice}</h3>
-        <p>{treatment.get(choice)}</p>
+    <div class='glass-box'>
+        <h3 style='color:white;'>Treatment for {choice}</h3>
+        <p style='color:#ddd;'>{treatments[choice]}</p>
     </div>
     """, unsafe_allow_html=True)
 
-# ---------------------- DOCTOR'S ADVICE ----------------------
-elif page == "👨‍⚕️ Doctor’s Advice":
-    st.markdown("<div class='main-title'>👨‍⚕️ Doctor’s Advice</div>", unsafe_allow_html=True)
+# ---------------------------------------------------------
+# DOCTOR’S ADVICE PAGE
+# ---------------------------------------------------------
+elif page == "Advice":
+    st.markdown(
+        "<div class='header-card'><h2 style='color:white;'>👨‍⚕️ Doctor’s Advice</h2></div>",
+        unsafe_allow_html=True
+    )
 
     st.markdown("""
-    <div class='info-card'>
-        <ul>
-            <li>Watch for sudden size or color changes.</li>
-            <li>Avoid intense sun exposure (12–4 PM).</li>
-            <li>Use SPF 30+ every day.</li>
-            <li>Do not scratch or pick lesions.</li>
-            <li>Seek a dermatologist if changes persist.</li>
+    <div class='glass-box'>
+        <ul style='color:#ddd;'>
+            <li>Monitor sudden changes in shape, size, or color.</li>
+            <li>Avoid peak sunlight (12 PM – 4 PM).</li>
+            <li>Use sunscreen SPF 30+ every day.</li>
+            <li>Never scratch or pick lesions.</li>
+            <li>Consult a dermatologist if abnormalities persist.</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
 
-# ---------------------- ABOUT PAGE ----------------------
-elif page == "ℹ️ About":
-    st.markdown("<div class='main-title'>ℹ️ About This App</div>", unsafe_allow_html=True)
+# ---------------------------------------------------------
+# ABOUT PAGE
+# ---------------------------------------------------------
+elif page == "About":
+    st.markdown(
+        "<div class='header-card'><h2 style='color:white;'>ℹ️ About</h2></div>",
+        unsafe_allow_html=True
+    )
 
     st.markdown("""
-    <div class='info-card'>
-        <h3>📌 Purpose</h3>
-        <p>This application is built to help users understand skin cancer types and guide them with treatment options and general advice.</p>
-
-        <h3>👩‍💻 Developer</h3>
-        <p>Developed by a passionate ML enthusiast for healthcare awareness and guidance.</p>
-
-        <h3>⚠️ Disclaimer</h3>
-        <p>This tool is for informational use only. Always consult a certified dermatologist for diagnosis.</p>
+    <div class='glass-box'>
+        <p style='color:#ddd;'>
+            Skin Health AI is a smart and stylish visual assistant designed
+            to help raise awareness of skin lesions, treatment options, 
+            and general skin health guidance.
+        </p>
+        <p style='color:#bbb;'>Designed with ❤️ for awareness & self-care.</p>
     </div>
     """, unsafe_allow_html=True)
+
+# ---------------------------------------------------------
+# FOOTER
+# ---------------------------------------------------------
+st.markdown("""
+<div class='footer'>
+© 2025 Skin Health AI | Designed with ❤️
+</div>
+""", unsafe_allow_html=True)
