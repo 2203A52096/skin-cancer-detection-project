@@ -426,12 +426,12 @@ elif st.session_state.page == "Advice":
     # ---------- PAGE HEADER ---------- #
     st.markdown("""
     <div style="
-        background: rgba(0,0,0,0.6); 
+        background: rgba(255,255,255,0.1);  /* light transparent background */
         padding:20px 25px; 
         border-radius:15px; 
         margin-bottom:20px;
     ">
-        <h2 style='color:white; margin:0; font-size:28px;'>
+        <h2 style='color:white; margin:0; font-size:28px; font-weight:600;'>
             💡 Doctor's Advice
         </h2>
     </div>
@@ -440,20 +440,18 @@ elif st.session_state.page == "Advice":
     # ---------- MAIN TITLE & DESCRIPTION ---------- #
     st.markdown("""
     <div style="
-        background: rgba(255,255,255,0.08); 
-        padding:25px 30px; 
+        background: rgba(255,255,255,0.05);  /* light transparent, not black */
+        padding:20px 25px; 
         border-radius:15px; 
         margin-bottom:20px;
-        border: 1px solid rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.1);
     ">
         <h4 style='color:white; margin-bottom:12px; font-size:22px; font-weight:600;'>
             💊 Essential Dermatology Care Tips
         </h4>
 
         <p style='color:#e0e0e0; font-size:16px; line-height:1.8; margin:0;'>
-            Follow these dermatologist-approved guidelines to maintain healthy, glowing, 
-            and well-protected skin. These tips support your skin barrier, prevent damage, 
-            and promote long-term skin wellness.
+            Follow these dermatologist-approved guidelines to maintain healthy, glowing, and well-protected skin. These tips support your skin barrier, prevent damage, and promote long-term skin wellness.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -482,18 +480,18 @@ elif st.session_state.page == "Advice":
         "Seek medical help if a spot bleeds, grows rapidly, or becomes painful."
     ]
 
-    # ---------- DISPLAY EACH TIP AS A CARD ---------- #
+    # ---------- DISPLAY EACH TIP IN SEPARATE CARD ---------- #
     for tip in advice_list:
         st.markdown(
             f"""
             <div style="
-                background: rgba(255,255,255,0.1); 
+                background: rgba(255,255,255,0.05);  /* light transparent */
                 padding:15px 18px; 
                 border-radius:12px; 
                 margin-bottom:12px;
-                border: 1px solid rgba(255,255,255,0.15);
+                border: 1px solid rgba(255,255,255,0.08);
             ">
-                <p style="color:#ddd; font-size:16px; margin:0; line-height:1.7;">
+                <p style="color:#ddd; font-size:16px; margin:0; line-height:1.6;">
                     {tip}
                 </p>
             </div>
