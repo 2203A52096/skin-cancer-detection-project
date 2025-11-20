@@ -78,9 +78,7 @@ div[data-testid="stForm"] button {
 
 # ---------------- LOAD MODEL ----------------
 @st.cache_resource
-
 from tensorflow.keras.models import load_model
-
 model=load_model("skincancercnn.h5")
 
 if model is None:
