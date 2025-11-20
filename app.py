@@ -519,7 +519,7 @@ if st.session_state.page == "About":
     st.markdown("""
     <div style="
         background: rgba(255,255,255,0.08);
-        padding:20px 25px;
+        padding:25px 30px;  /* Header padding */
         border-radius:15px;
         margin-bottom:20px;
         border: 1px solid rgba(255,255,255,0.1);
@@ -547,11 +547,11 @@ if st.session_state.page == "About":
         {
             "title": "💡 What This App Does",
             "content": """
-                <ul style='color:#ccc; line-height:1.8; font-size:16px; padding-left:20px; margin:0;'>
-                    <li>Analyzes the uploaded skin image based on texture, color, and intensity patterns.</li>
-                    <li>Provides possible skin condition identification.</li>
-                    <li>Offers treatment guidance based on selected condition.</li>
-                    <li>Provides dermatologist-style general advice for daily skin care.</li>
+                <ul style='color:#ccc; line-height:1.8; font-size:16px; padding-left:25px; margin:0;'>
+                    <li style='margin-bottom:8px;'>Analyzes the uploaded skin image based on texture, color, and intensity patterns.</li>
+                    <li style='margin-bottom:8px;'>Provides possible skin condition identification.</li>
+                    <li style='margin-bottom:8px;'>Offers treatment guidance based on selected condition.</li>
+                    <li style='margin-bottom:8px;'>Provides dermatologist-style general advice for daily skin care.</li>
                     <li>Helps users stay informed and aware of their skin health.</li>
                 </ul>
             """
@@ -571,17 +571,18 @@ if st.session_state.page == "About":
         st.markdown(f"""
         <div style="
             background: rgba(255,255,255,0.05);
-            padding:20px 25px;
+            padding:20px 25px;  /* Section card padding */
             border-radius:12px;
             margin-bottom:15px;
             border: 1px solid rgba(255,255,255,0.08);
         ">
-            <h4 style='color:white; margin-bottom:10px; font-size:20px; font-weight:600;'>{section['title']}</h4>
+            <h4 style='color:white; margin-bottom:12px; font-size:20px; font-weight:600;'>{section['title']}</h4>
             <div style='color:#ccc; line-height:1.7; font-size:16px;'>
                 {section['content']}
             </div>
         </div>
         """, unsafe_allow_html=True)
+
 
 # -----------------------------------------
 # FOOTER
