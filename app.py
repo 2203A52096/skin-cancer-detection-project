@@ -177,39 +177,46 @@ st.sidebar.button("ℹ️ About", on_click=lambda: switch_page("About"))
 # HOME PAGE
 # -----------------------------------------
 if st.session_state.page == "Home":
+
     st.markdown("""
-    <div class='header-card'>
-        <h1 style='color:white; text-align:center;'>🩺 Skin Health AI</h1>
-        <p style='color:#ddd; text-align:center; font-size:17px;'>
-            Welcome to your all-in-one intelligent skin health companion.<br>
-            Navigate through our smart tools to analyze, understand, and care for your skin.
+    <div class='header-card' style='margin-top:30px; margin-bottom:40px;'>
+        <h1 style='color:white; text-align:center; font-size:42px;'>🩺 Skin Health AI</h1>
+        <p style='color:#ddd; text-align:center; font-size:18px; margin-top:10px;'>
+            Your intelligent assistant for early skin health awareness.<br>
+            Explore tools designed to analyze images, understand conditions, and get dermatology-backed advice.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
+    # -------- Intro Card -------- #
     st.markdown("""
-    <div class='glass-box'>
-        <h2 style='color:white;'>📌 What You Can Do Here</h2>
-        <p style='color:#ccc; font-size:16px;'>
-        Skin Health AI provides a complete workflow to help you understand your skin condition.<br><br>
-        Below is a quick overview of every page:
+    <div class='glass-box' style='padding:25px; margin-bottom:40px;'>
+        <h2 style='color:white; margin-bottom:10px;'>📌 What You Can Do Here</h2>
+        <p style='color:#ccc; font-size:17px;'>
+        Skin Health AI guides you through a complete flow — from uploading your image to receiving predictions, 
+        treatment suggestions, and expert tips to maintain skin wellness.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
-    # --- Four Sections in a Grid ---
-    col1, col2 = st.columns(2)
+    # Create extra vertical spacing
+    st.markdown("<div style='margin-top:25px;'></div>", unsafe_allow_html=True)
 
-    # Upload Page Intro
+    # ======================
+    #       GRID START
+    # ======================
+
+    col1, col2 = st.columns(2, gap="large")
+
     with col1:
         st.markdown("""
-        <div class='glass-box'>
+        <div class='glass-box' style='padding:25px; min-height:330px; margin-bottom:35px;'>
             <h3 style='color:white;'>📤 Upload & Predict</h3>
-            <p style='color:#ccc;'>
-                Upload your skin image and let AI analyze texture, color patterns, and lesion features 
+            <p style='color:#ccc; font-size:15px;'>
+                Upload your skin image and let AI analyze texture, color variation, and lesion patterns 
                 to predict possible skin conditions.
-                <br><br>Includes:
-                <ul style='color:#ccc;'>
+                <br><br><b>Includes:</b>
+                <ul style='color:#ccc; line-height:1.6;'>
                     <li>Instant prediction</li>
                     <li>Smart image analysis</li>
                     <li>Secure offline processing</li>
@@ -218,53 +225,52 @@ if st.session_state.page == "Home":
         </div>
         """, unsafe_allow_html=True)
 
-    # Treatment Page Intro
     with col2:
         st.markdown("""
-        <div class='glass-box'>
+        <div class='glass-box' style='padding:25px; min-height:330px; margin-bottom:35px;'>
             <h3 style='color:white;'>🩺 Treatment Plan</h3>
-            <p style='color:#ccc;'>
-                Once your skin condition is predicted, this page provides detailed treatment guidance 
-                based on authentic dermatology references.
-                <br><br>Includes:
-                <ul style='color:#ccc;'>
+            <p style='color:#ccc; font-size:15px;'>
+                Access dermatology-based treatment recommendations tailored to the predicted skin condition.
+                <br><br><b>Includes:</b>
+                <ul style='color:#ccc; line-height:1.6;'>
                     <li>Condition-specific treatment steps</li>
                     <li>When to consult a dermatologist</li>
-                    <li>Precaution and care guidance</li>
+                    <li>Precautions & care routines</li>
                 </ul>
             </p>
         </div>
         """, unsafe_allow_html=True)
 
-    # Advice
-    col3, col4 = st.columns(2)
+    # Add large vertical gap before next grid
+    st.markdown("<div style='margin-top:30px;'></div>", unsafe_allow_html=True)
+
+    col3, col4 = st.columns(2, gap="large")
 
     with col3:
         st.markdown("""
-        <div class='glass-box'>
+        <div class='glass-box' style='padding:25px; min-height:330px; margin-bottom:35px;'>
             <h3 style='color:white;'>💡 Doctor's Advice</h3>
-            <p style='color:#ccc;'>
-                Helpful dermatology-backed recommendations to maintain healthy skin.
-                <br><br>Includes:
-                <ul style='color:#ccc;'>
-                    <li>General skin care rules</li>
-                    <li>Prevention tips</li>
-                    <li>Do's and Don’ts</li>
+            <p style='color:#ccc; font-size:15px;'>
+                Evidence-based dermatology tips to help you maintain healthy, safe, and glowing skin.
+                <br><br><b>Includes:</b>
+                <ul style='color:#ccc; line-height:1.6;'>
+                    <li>Daily care recommendations</li>
+                    <li>Prevention techniques</li>
+                    <li>Skincare do’s & don’ts</li>
                 </ul>
             </p>
         </div>
         """, unsafe_allow_html=True)
 
-    # About Page Intro
     with col4:
         st.markdown("""
-        <div class='glass-box'>
+        <div class='glass-box' style='padding:25px; min-height:330px; margin-bottom:35px;'>
             <h3 style='color:white;'>ℹ️ About This App</h3>
-            <p style='color:#ccc;'>
-                Learn about the purpose of this project, how the AI works, developers behind it, 
-                and our mission to make skin health accessible.
-                <br><br>Includes:
-                <ul style='color:#ccc;'>
+            <p style='color:#ccc; font-size:15px;'>
+                Learn about the mission, purpose, technology, and team behind Skin Health AI — built 
+                to promote early awareness and accessible digital dermatology.
+                <br><br><b>Includes:</b>
+                <ul style='color:#ccc; line-height:1.6;'>
                     <li>Project goals</li>
                     <li>Team & guidance</li>
                     <li>Technology stack</li>
