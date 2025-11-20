@@ -508,7 +508,13 @@ if st.session_state.page == "Advice":
 # -----------------------------------------
 # ABOUT PAGE
 # -----------------------------------------
-elif st.session_state.page == "About":
+import streamlit as st
+
+if 'page' not in st.session_state:
+    st.session_state.page = "About"
+
+if st.session_state.page == "About":
+
     # ---------- PAGE HEADER ---------- #
     st.markdown("""
     <div style="
@@ -524,7 +530,7 @@ elif st.session_state.page == "About":
     </div>
     """, unsafe_allow_html=True)
 
-    # ---------- SECTION CARDS ---------- #
+    # ---------- SECTIONS ---------- #
     sections = [
         {
             "title": "🌟 Mission",
@@ -571,11 +577,12 @@ elif st.session_state.page == "About":
             border: 1px solid rgba(255,255,255,0.08);
         ">
             <h4 style='color:white; margin-bottom:10px; font-size:20px; font-weight:600;'>{section['title']}</h4>
-            <p style='color:#ccc; line-height:1.7; font-size:16px; margin:0;'>
+            <div style='color:#ccc; line-height:1.7; font-size:16px;'>
                 {section['content']}
-            </p>
+            </div>
         </div>
         """, unsafe_allow_html=True)
+
 
 # -----------------------------------------
 # FOOTER
