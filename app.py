@@ -423,21 +423,31 @@ elif st.session_state.page == "Treatment":
 # -----------------------------------------
 elif st.session_state.page == "Advice":
 
+    # Header
     st.markdown(
         "<div class='header-card'><h2 style='color:white;'>💡 Doctor's Advice</h2></div>",
         unsafe_allow_html=True
     )
 
+    # Advice section with consistent font + smooth UI
     st.markdown(
         """
         <style>
+            /* Make sure all text in the advice box matches Streamlit's global font */
             .glass-box * {
                 font-family: inherit !important;
+            }
+
+            /* Optional: make bullet points slightly smoother */
+            .glass-box ul li {
+                margin-bottom: 6px;
             }
         </style>
 
         <div class='glass-box' 
-             style='padding:45px 50px; border-radius:15px;'>
+             style='padding:45px 50px; border-radius:15px; background:rgba(255,255,255,0.05);
+                    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+                    border:1px solid rgba(255,255,255,0.1);'>
 
             <h4 style='color:white; margin-bottom:18px; font-size:22px;'>
                 💊 Essential Dermatology Care Tips
@@ -475,7 +485,6 @@ elif st.session_state.page == "Advice":
         """,
         unsafe_allow_html=True
     )
-
 
 # -----------------------------------------
 # ABOUT PAGE
