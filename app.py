@@ -421,13 +421,13 @@ elif st.session_state.page == "Treatment":
 # -----------------------------------------
 # DOCTOR ADVICE PAGE
 # -----------------------------------------
-if st.session_state.page == "Advice":
+elif st.session_state.page == "Advice":
 
     # ---------- PAGE HEADER ---------- #
     st.markdown("""
     <div style="
         background: rgba(0,0,0,0.6); 
-        padding:25px 30px; 
+        padding:20px 25px; 
         border-radius:15px; 
         margin-bottom:20px;
     ">
@@ -437,10 +437,10 @@ if st.session_state.page == "Advice":
     </div>
     """, unsafe_allow_html=True)
 
-    # ---------- MAIN TITLE AND DESCRIPTION ---------- #
+    # ---------- MAIN TITLE & DESCRIPTION ---------- #
     st.markdown("""
     <div style="
-        background: rgba(255,255,255,0.07); 
+        background: rgba(255,255,255,0.08); 
         padding:25px 30px; 
         border-radius:15px; 
         margin-bottom:20px;
@@ -450,15 +450,15 @@ if st.session_state.page == "Advice":
             💊 Essential Dermatology Care Tips
         </h4>
 
-        <p style='color:#ccc; font-size:16px; line-height:1.8; margin:0;'>
-            Follow these dermatologist-approved guidelines to maintain healthy, glowing,
-            and well-protected skin. These tips support your skin barrier, prevent damage,
-            and promote long-term skin health.
+        <p style='color:#e0e0e0; font-size:16px; line-height:1.8; margin:0;'>
+            Follow these dermatologist-approved guidelines to maintain healthy, glowing, 
+            and well-protected skin. These tips support your skin barrier, prevent damage, 
+            and promote long-term skin wellness.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
-    # ---------- LIST OF ADVICE ---------- #
+    # ---------- ADVICE LIST ---------- #
     advice_list = [
         "Use a broad-spectrum sunscreen (SPF 30 or higher) every day.",
         "Reapply sunscreen every 2–3 hours when outdoors.",
@@ -488,12 +488,12 @@ if st.session_state.page == "Advice":
             f"""
             <div style="
                 background: rgba(255,255,255,0.08); 
-                padding:12px 15px; 
-                border-radius:10px; 
-                margin-bottom:10px;
+                padding:15px 18px; 
+                border-radius:12px; 
+                margin-bottom:12px;
                 border: 1px solid rgba(255,255,255,0.12);
             ">
-                <p style='color:#ddd; font-size:16px; margin:0; line-height:1.6;'>
+                <p style="color:#ddd; font-size:16px; margin:0; line-height:1.6;">
                     {tip}
                 </p>
             </div>
