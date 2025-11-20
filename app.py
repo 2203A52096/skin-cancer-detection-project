@@ -509,74 +509,73 @@ if st.session_state.page == "Advice":
 # ABOUT PAGE
 # -----------------------------------------
 elif st.session_state.page == "About":
-    st.markdown("<div class='header-card'><h2 style='color:white;'>ℹ️ About This App</h2></div>", unsafe_allow_html=True)
-
+    # ---------- PAGE HEADER ---------- #
     st.markdown("""
-    <div class='glass-box' style='padding:25px 30px;'>
-
-        <!-- Mission -->
-        <div style='margin-bottom:25px;'>
-            <h3 style='color:white; margin-bottom:8px;'>🌟 Mission</h3>
-            <p style='color:#ccc; line-height:1.8;'>
-                Our mission is to make skin health insights accessible to everyone by providing a simple,
-                visually-intelligent tool that helps users understand their skin's condition early and clearly.
-            </p>
-        </div>
-
-        <!-- Goal -->
-        <div style='margin-bottom:25px;'>
-            <h3 style='color:white; margin-bottom:8px;'>🎯 Goal</h3>
-            <p style='color:#ccc; line-height:1.8;'>
-                The goal of Skin Health AI is to empower people with quick, informative skin analysis
-                and guidance, helping them take the right steps toward better skin care and early awareness.
-            </p>
-        </div>
-
-        <!-- Problem Statement -->
-        <div style='margin-bottom:25px;'>
-            <h3 style='color:white; margin-bottom:8px;'>❗ Problem Statement</h3>
-            <p style='color:#ccc; line-height:1.8;'>
-                Many individuals delay seeking medical help for skin abnormalities due to lack of
-                awareness, hesitation, or not knowing whether a spot or lesion is concerning.
-                This delay can lead to late detection of serious conditions.
-            </p>
-        </div>
-
-        <!-- What This App Does -->
-        <div style='margin-bottom:25px;'>
-            <h3 style='color:white; margin-bottom:12px;'>💡 What This App Does</h3>
-            <ul style='color:#ccc; line-height:1.9; font-size:16px; padding-left:20px;'>
-                <li>Analyzes the uploaded skin image based on texture, color, and intensity patterns.</li>
-                <li>Provides possible skin condition identification.</li>
-                <li>Offers treatment guidance based on selected condition.</li>
-                <li>Provides dermatologist-style general advice for daily skin care.</li>
-                <li>Helps users stay informed and aware of their skin health.</li>
-            </ul>
-        </div>
-
-        <!-- Why This Matters -->
-        <div style='margin-bottom:25px;'>
-            <h3 style='color:white; margin-bottom:8px;'>🧑‍⚕️ Why This Matters</h3>
-            <p style='color:#ccc; line-height:1.8;'>
-                Early awareness is key in preventing severe outcomes in many skin conditions.
-                This app encourages proactive skin monitoring and helps users understand when
-                they should seek professional medical evaluation.
-            </p>
-        </div>
-
-        <!-- Disclaimer -->
-        <div style='margin-bottom:10px;'>
-            <h3 style='color:white; margin-bottom:8px;'>⚠️ Disclaimer</h3>
-            <p style='color:#ccc; line-height:1.8;'>
-                This tool is intended for awareness and educational purposes only.
-                It is <b>not</b> a medical diagnostic system. Always consult a certified dermatologist
-                for clinical evaluation and treatment.
-            </p>
-        </div>
-
+    <div style="
+        background: rgba(255,255,255,0.08);
+        padding:20px 25px;
+        border-radius:15px;
+        margin-bottom:20px;
+        border: 1px solid rgba(255,255,255,0.1);
+    ">
+        <h2 style='color:white; margin:0; font-size:28px; font-weight:600;'>
+            ℹ️ About This App
+        </h2>
     </div>
     """, unsafe_allow_html=True)
 
+    # ---------- SECTION CARDS ---------- #
+    sections = [
+        {
+            "title": "🌟 Mission",
+            "content": "Our mission is to make skin health insights accessible to everyone by providing a simple, visually-intelligent tool that helps users understand their skin's condition early and clearly."
+        },
+        {
+            "title": "🎯 Goal",
+            "content": "The goal of Skin Health AI is to empower people with quick, informative skin analysis and guidance, helping them take the right steps toward better skin care and early awareness."
+        },
+        {
+            "title": "❗ Problem Statement",
+            "content": "Many individuals delay seeking medical help for skin abnormalities due to lack of awareness, hesitation, or not knowing whether a spot or lesion is concerning. This delay can lead to late detection of serious conditions."
+        },
+        {
+            "title": "💡 What This App Does",
+            "content": """
+                <ul style='color:#ccc; line-height:1.8; font-size:16px; padding-left:20px; margin:0;'>
+                    <li>Analyzes the uploaded skin image based on texture, color, and intensity patterns.</li>
+                    <li>Provides possible skin condition identification.</li>
+                    <li>Offers treatment guidance based on selected condition.</li>
+                    <li>Provides dermatologist-style general advice for daily skin care.</li>
+                    <li>Helps users stay informed and aware of their skin health.</li>
+                </ul>
+            """
+        },
+        {
+            "title": "🧑‍⚕️ Why This Matters",
+            "content": "Early awareness is key in preventing severe outcomes in many skin conditions. This app encourages proactive skin monitoring and helps users understand when they should seek professional medical evaluation."
+        },
+        {
+            "title": "⚠️ Disclaimer",
+            "content": "This tool is intended for awareness and educational purposes only. It is <b>not</b> a medical diagnostic system. Always consult a certified dermatologist for clinical evaluation and treatment."
+        }
+    ]
+
+    # ---------- DISPLAY EACH SECTION ---------- #
+    for section in sections:
+        st.markdown(f"""
+        <div style="
+            background: rgba(255,255,255,0.05);
+            padding:20px 25px;
+            border-radius:12px;
+            margin-bottom:15px;
+            border: 1px solid rgba(255,255,255,0.08);
+        ">
+            <h4 style='color:white; margin-bottom:10px; font-size:20px; font-weight:600;'>{section['title']}</h4>
+            <p style='color:#ccc; line-height:1.7; font-size:16px; margin:0;'>
+                {section['content']}
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
 # -----------------------------------------
 # FOOTER
