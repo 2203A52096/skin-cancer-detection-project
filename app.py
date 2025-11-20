@@ -421,28 +421,44 @@ elif st.session_state.page == "Treatment":
 # -----------------------------------------
 # DOCTOR ADVICE PAGE
 # -----------------------------------------
-elif st.session_state.page == "Advice":
-    st.markdown("<div class='header-card'><h2 style='color:white;'>💡 Doctor's Advice</h2></div>", unsafe_allow_html=True)
+if st.session_state.page == "Advice":
 
-    # ---------- HEADER CONTENT ---------- #
+    # ---------- PAGE HEADER ---------- #
     st.markdown("""
-    <div class='glass-box' 
-         style='padding:45px 60px; border-radius:15px; margin-bottom:20px;'>
-
-        <h4 style='color:white; margin-bottom:16px; font-size:24px; font-weight:600;'>
-            💊 Essential Dermatology Care Tips
-        </h4>
-
-        <p style='color:#e0e0e0; margin-bottom:10px; font-size:17px; line-height:1.8;'>
-            Follow these dermatologist-approved guidelines to maintain healthy,
-            glowing, and well-protected skin. These recommendations help support 
-            your skin barrier, prevent long-term damage, and promote overall skin wellness.
-        </p>
-
+    <div style="
+        background: rgba(0,0,0,0.6); 
+        padding:25px 30px; 
+        border-radius:15px; 
+        margin-bottom:20px;
+    ">
+        <h2 style='color:white; margin:0; font-size:28px;'>
+            💡 Doctor's Advice
+        </h2>
     </div>
     """, unsafe_allow_html=True)
 
-    # ---------- ADVICE LIST ---------- #
+    # ---------- MAIN TITLE AND DESCRIPTION ---------- #
+    st.markdown("""
+    <div style="
+        background: rgba(255,255,255,0.07); 
+        padding:25px 30px; 
+        border-radius:15px; 
+        margin-bottom:20px;
+        border: 1px solid rgba(255,255,255,0.12);
+    ">
+        <h4 style='color:white; margin-bottom:12px; font-size:22px; font-weight:600;'>
+            💊 Essential Dermatology Care Tips
+        </h4>
+
+        <p style='color:#ccc; font-size:16px; line-height:1.8; margin:0;'>
+            Follow these dermatologist-approved guidelines to maintain healthy, glowing,
+            and well-protected skin. These tips support your skin barrier, prevent damage,
+            and promote long-term skin health.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ---------- LIST OF ADVICE ---------- #
     advice_list = [
         "Use a broad-spectrum sunscreen (SPF 30 or higher) every day.",
         "Reapply sunscreen every 2–3 hours when outdoors.",
@@ -466,18 +482,18 @@ elif st.session_state.page == "Advice":
         "Seek medical help if a spot bleeds, grows rapidly, or becomes painful."
     ]
 
-    # ---------- DISPLAY EACH TIP AS SEPARATE PADDED BOX ---------- #
+    # ---------- DISPLAY EACH TIP IN SEPARATE CARD ---------- #
     for tip in advice_list:
         st.markdown(
             f"""
             <div style="
-                background: rgba(255,255,255,0.07); 
-                padding:15px 18px; 
-                border-radius:12px; 
-                margin-bottom:12px;
+                background: rgba(255,255,255,0.08); 
+                padding:12px 15px; 
+                border-radius:10px; 
+                margin-bottom:10px;
                 border: 1px solid rgba(255,255,255,0.12);
             ">
-                <p style="color:#ddd; font-size:16px; margin:0; line-height:1.7;">
+                <p style='color:#ddd; font-size:16px; margin:0; line-height:1.6;'>
                     {tip}
                 </p>
             </div>
